@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="LocationSystem\LocationMaps\MapSheet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MapSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Update="LocationSystem\LocationSprites\LocationSprites.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocationSprites.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Monsters\MonsterSprites\MonsterSprites.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MonsterSprites.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="LocationSystem\LocationMaps\MapSheet.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapSheet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="LocationSystem\LocationSprites\LocationSprites.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocationSprites.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Monsters\MonsterSprites\MonsterSprites.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MonsterSprites.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
