@@ -23,6 +23,7 @@ namespace RPG.Shop
 
         public void BuyOrSell(PlayerInventory playerInventory)
         {
+            Console.Clear();
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("[1] - Buy");
             Console.WriteLine("[2] - Sell");
@@ -63,17 +64,27 @@ namespace RPG.Shop
 
         public void Buy(PlayerInventory playerInventory)
         {
-            ShopInventory.Display();
-
+           // ShopInventory.Display();
             //Console.WriteLine("Select the item you want to buy");
-
             int choice = 99;
 
             do
             {
+                Console.Clear();
+                ShopInventory.Display();
                 Console.WriteLine("Select the item you want to buy");
-                Console.WriteLine("0 to EXIT");
+                Console.WriteLine("\n0 to EXIT");
                 int.TryParse(Console.ReadLine(), out choice);
+
+                if (choice > 0 && choice <= ShopInventory.InventoryList.Count())
+                {
+                    playerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
+                    //ShopInventory.InventoryList.Remove(ShopInventory.InventoryList[choice - 1]);
+                    Console.WriteLine($"\nYou bought the {ShopInventory.InventoryList[choice - 1].Name}");
+                    Console.ReadKey();
+                    choice = 99;
+                }
+
 
             } while (choice < 0 || choice > ShopInventory.InventoryList.Count());
 
@@ -81,28 +92,52 @@ namespace RPG.Shop
             if (choice > 0 && choice <= ShopInventory.InventoryList.Count())
             {
                 playerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
-                ShopInventory.InventoryList.Remove(ShopInventory.InventoryList[choice - 1]);
+                //ShopInventory.InventoryList.Remove(ShopInventory.InventoryList[choice - 1]);
             }
         }
 
         public void Sell(PlayerInventory playerInventory)
         {
-            playerInventory.Display();
+            //playerInventory.Display();
 
             int choice = 99;
 
-            do
+            if(playerInventory.InventoryList.Count() > 0)
             {
-                Console.WriteLine("Select the item you want to buy");
-                Console.WriteLine("0 to EXIT");
-                int.TryParse(Console.ReadLine(), out choice);
-            } while (choice < 0 || choice > playerInventory.InventoryList.Count());
+                do
+                {
+                    Console.Clear();
+                    playerInventory.Display();
+                    Console.WriteLine("Select the item you want to sell");
+                    Console.WriteLine("\n0 to EXIT");
+                    int.TryParse(Console.ReadLine(), out choice);
 
-            if (choice > 0 && choice <= playerInventory.InventoryList.Count())
-            {
-                ShopInventory.AddToInventory(playerInventory.InventoryList[choice - 1]);
-                playerInventory.RemoveFromInventory(playerInventory.InventoryList[choice - 1]);
+                    if (choice > 0 && choice <= playerInventory.InventoryList.Count())
+                    {
+                        //ShopInventory.AddToInventory(playerInventory.InventoryList[choice - 1]);
+                        Console.WriteLine($"\nYou sold the {playerInventory.InventoryList[choice - 1].Name}");
+                        playerInventory.RemoveFromInventory(playerInventory.InventoryList[choice - 1]);
+                        Console.ReadKey();
+                        choice = 99;
+                    }
+
+                    if(playerInventory.InventoryList.Count() <= 0)
+                    {
+                        Console.WriteLine("\nYou have nothing left to sell.");
+                        Console.ReadKey();
+                        //choice = 0;
+                        break;
+                    }
+
+                } while (choice < 0 || choice > playerInventory.InventoryList.Count());
             }
+            else
+            {
+                Console.WriteLine("You have nothing to sell.");
+                Console.ReadKey();
+            }
+
+
         }
 
 

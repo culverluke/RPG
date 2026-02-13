@@ -15,7 +15,6 @@ namespace RPG.Shop
 
             ShopInventory.AddToInventory(itemCreator.CreateIronSword());
             ShopInventory.AddToInventory(itemCreator.CreatePotion());
-            ShopInventory.AddToInventory(itemCreator.CreatePotion());
         }
 
     }
