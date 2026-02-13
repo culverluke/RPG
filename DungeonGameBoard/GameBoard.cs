@@ -28,7 +28,7 @@ namespace RPG.DungeonGameBoard
 
         public List<BoardTile> TileList { get; set; }
         public int Dimentions { get; set; }
-        public int[] PlayerLocation { get; set; } // 0 is y axis  -  1 is x axis
+        public int[] PlayerLocation { get; set; } // 0 is y axis  -  1 is x axis // USE A FUCKING VECTOR    
         public int[] ExitLocation { get; set; }
 
         public bool GameOver = false;

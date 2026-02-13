@@ -37,11 +37,11 @@ namespace RPG.Shop
                 switch(choice)
                 {
                     case 1:// buy
-                        ShopInventory.Display();
+                        Buy(playerInventory);
                         break;
 
                     case 2:// sell
-                        playerInventory.Display();
+                        Sell(playerInventory);
                         break;
 
                     case 0:
@@ -63,7 +63,46 @@ namespace RPG.Shop
 
         public void Buy(PlayerInventory playerInventory)
         {
+            ShopInventory.Display();
 
+            //Console.WriteLine("Select the item you want to buy");
+
+            int choice = 99;
+
+            do
+            {
+                Console.WriteLine("Select the item you want to buy");
+                Console.WriteLine("0 to EXIT");
+                int.TryParse(Console.ReadLine(), out choice);
+
+            } while (choice < 0 || choice > ShopInventory.InventoryList.Count());
+
+
+            if (choice > 0 && choice <= ShopInventory.InventoryList.Count())
+            {
+                playerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
+                ShopInventory.InventoryList.Remove(ShopInventory.InventoryList[choice - 1]);
+            }
+        }
+
+        public void Sell(PlayerInventory playerInventory)
+        {
+            playerInventory.Display();
+
+            int choice = 99;
+
+            do
+            {
+                Console.WriteLine("Select the item you want to buy");
+                Console.WriteLine("0 to EXIT");
+                int.TryParse(Console.ReadLine(), out choice);
+            } while (choice < 0 || choice > playerInventory.InventoryList.Count());
+
+            if (choice > 0 && choice <= playerInventory.InventoryList.Count())
+            {
+                ShopInventory.AddToInventory(playerInventory.InventoryList[choice - 1]);
+                playerInventory.RemoveFromInventory(playerInventory.InventoryList[choice - 1]);
+            }
         }
 
 

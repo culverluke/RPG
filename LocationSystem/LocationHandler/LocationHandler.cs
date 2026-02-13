@@ -50,7 +50,7 @@ namespace RPG.LocationSystem.LocationHandler
 
 
 
-        public Dictionary<int, string> CreateDictionary()
+        public Dictionary<int, string> CreateDictionary() // should be zero based
         {
             LocationDictionary.Add(1, "Pallet Town");
             LocationDictionary.Add(2, "Faire Town");

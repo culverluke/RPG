@@ -23,7 +23,7 @@ namespace RPG.LocationSystem.LocationClasses
 
         public int BoardDimentions { get; set; }
 
-        public bool IsDungeon = false;
+        public bool IsDungeon = false;  // are fields so move them
         public bool HasBattle = false;
         public string Name { get; set; }
         public int LocationKey { get; set; }
