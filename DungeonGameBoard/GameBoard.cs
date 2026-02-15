@@ -1,6 +1,7 @@
 ﻿using RPG.BattleHandler;
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
+using RPG.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace RPG.DungeonGameBoard
 
         public List<BoardTile> TileList { get; set; }
         public int Dimentions { get; set; }
-        public int[] PlayerLocation { get; set; } // 0 is y axis  -  1 is x axis // USE A FUCKING VECTOR    
+        public int[] PlayerLocation { get; set; } // 0 is y axis  -  1 is x axis // USE A FUCKING VECTOR
         public int[] ExitLocation { get; set; }
 
         public bool GameOver = false;
@@ -143,7 +144,7 @@ namespace RPG.DungeonGameBoard
             }
         }
 
-        public void BeginDungeon(Player.Player player, PlayerInventory playerInventory, List<Monster> monsterList, BattleHandler.BattleHandler battleHandler, BattleText battleText)
+        public void BeginDungeon(PlayerParams playerParams, BattleParams battleParams)
         {
             PlayerController playerController = new PlayerController(); // add to sys creator
             do
@@ -152,9 +153,9 @@ namespace RPG.DungeonGameBoard
                 playerController.MovePlayer(this);
                 if (CheckForBattle())
                 {
-                    battleHandler.Battle(player, battleHandler.GetRandomMonsterFromList(monsterList), playerInventory, battleText);
+                    battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterList), battleParams.BattleText);
                 }
-            } while (!CheckForGameOver(player));
+            } while (!CheckForGameOver(playerParams.Player));
         }
 
         //-----

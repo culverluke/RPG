@@ -3,6 +3,8 @@ using RPG.Inventory.PlayerInventory;
 using RPG.Items;
 using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
+using RPG.Player;
+using RPG.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,13 +35,13 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override void LocationBattle(BattleHandler.BattleHandler battleHandler, Player.Player player, PlayerInventory playerInventory, ItemCreator itemCreator, BattleText battleText)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator)
         {
             Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
 
-            battleHandler.Battle(player, banditSecond, playerInventory, battleText);
+            battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText);
 
-            if (player.Health > 0)
+            if (playerParams.Player.Health > 0)
             {
                 Console.Clear();
                 Console.WriteLine("Your fight drew the attention of the bandit leader.");
@@ -50,7 +52,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 Monster banditLeader = new Monster("Bandit Leader", 35, 22, 12, 25, MonsterSprites.BanditLeader, itemCreator.CreateSteelSword());
 
-                battleHandler.Battle(player, banditLeader, playerInventory, battleText);
+                battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText);
 
                 Console.Clear();
                 Console.WriteLine("You cut down the bandit leader and the rest scattered.");
@@ -80,7 +82,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override int LocationMenu(BaseLocation location, Player.Player player, PlayerInventory playerInventory, LocationHandler.LocationHandler locationHandler, LocationCreator locationCreator)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
         {
             Console.Clear();
             location.PrintSprite();
@@ -101,50 +103,57 @@ namespace RPG.LocationSystem.LocationClasses
             switch (choice)
             {
                 case 1:
-                    return 1;
+                    
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     break;
 
                 case 2:
-                    return 2;
+                    
                     Console.Clear();
-                    player.PrintStats();
+                    playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
                 case 3:
-                    return 3;
+                    
                     Console.Clear();
-                    playerInventory.Display();
+                    playerParams.PlayerInventory.Display();
                     Console.ReadKey();
                     break;
 
                 case 4:  //shop
-                    return 4;
+                    
                     Console.Clear();
-                    Console.WriteLine("Not Implemented");
+                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
+                    shopParams.Shop.BuyOrSell(playerParams.PlayerInventory);
                     Console.ReadKey();
                     break;
 
                 case 5:  // chamge/leave location
-                    return 5;
-                    locationHandler.ChangeLocation(location);
-                    location = locationCreator.CreateTownWithKey(locationHandler.CurrentLocationKey);
+                    
+                    locationParams.LocationHandler.ChangeLocation(location);
+                    location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     Console.WriteLine();
-                    locationHandler.FirstTimeInLocationCheckWithKey(location, player);
+                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
                     break;
 
                 case 6:  // visit()
-                    return 6;
+                    location.VisitPerson();
+
+                    if (location.HasBattle)
+                    {
+                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator);
+                    }
+                    break;
                     break;
 
                 default:
-                    return 9;
+                    
                     Console.Clear();
                     Console.WriteLine("Pick an option from the menu");
                     Console.ReadKey();
@@ -152,6 +161,7 @@ namespace RPG.LocationSystem.LocationClasses
 
             }
 
+            return location;
 
         }
 

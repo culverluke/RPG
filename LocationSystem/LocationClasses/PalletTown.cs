@@ -41,11 +41,11 @@ namespace RPG.LocationSystem.LocationClasses
 
 
 
-        public override void LocationBattle(BattleHandler.BattleHandler battleHandler, Player.Player player, PlayerInventory playerInventory, ItemCreator itemCreator, BattleText battleText)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator)
         {
             Monster dad = new Monster("Dad", 20, 50, 12, 20, MonsterSprites.Dad, itemCreator.CreateIronSword());
 
-            battleHandler.Battle(player, dad, playerInventory, battleText);
+            battleParams.BattleHandler.Battle(playerParams, dad, battleParams.BattleText);
         }
 
 

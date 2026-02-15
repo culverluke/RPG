@@ -2,6 +2,7 @@
 using RPG.Inventory.PlayerInventory;
 using RPG.Items;
 using RPG.Monsters.MonsterClasses;
+using RPG.Player;
 using RPG.Shop;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public virtual void LocationBattle(BattleHandler.BattleHandler battleHandler, Player.Player player, PlayerInventory playerInventory, ItemCreator itemCreator, BattleText battleText)
+        public virtual void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator)
         {
             Console.WriteLine("Locastion has battle");
         }
@@ -60,7 +61,7 @@ namespace RPG.LocationSystem.LocationClasses
         }
 
 
-        public virtual int LocationMenu(BaseLocation location, Player.Player player, PlayerInventory playerInventory, LocationHandler.LocationHandler locationHandler, LocationCreator locationCreator)
+        public virtual BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
         {
             Console.Clear();
             location.PrintSprite();
@@ -80,53 +81,55 @@ namespace RPG.LocationSystem.LocationClasses
             switch (choice)
             {
                 case 1:
-                    return 1;
+
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     break;
 
                 case 2:
-                    return 2;
+
                     Console.Clear();
-                    player.PrintStats();
+                    playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
                 case 3:
-                    return 3;
+
                     Console.Clear();
-                    playerInventory.Display();
+                    playerParams.PlayerInventory.Display();
                     Console.ReadKey();
                     break;
 
                 case 4:  //shop
-                    return 4;
+
                     Console.Clear();
-                    Console.WriteLine("Not Implemented");
+                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
+                    shopParams.Shop.BuyOrSell(playerParams.PlayerInventory);
                     Console.ReadKey();
                     break;
 
                 case 5:  // chamge/leave location
-                    return 5;
-                    locationHandler.ChangeLocation(location);
-                    location = locationCreator.CreateTownWithKey(locationHandler.CurrentLocationKey);
+
+                    locationParams.LocationHandler.ChangeLocation(location);
+                    location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     Console.WriteLine();
-                    locationHandler.FirstTimeInLocationCheckWithKey(location, player);
+                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
                     break;
 
                 default:
-                    return 9;
+
                     Console.Clear();
                     Console.WriteLine("Pick an option from the menu");
                     Console.ReadKey();
                     break;
 
             }
-            //return location;
+
+            return location;
 
         }
 

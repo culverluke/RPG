@@ -1,6 +1,8 @@
 ﻿using RPG.BattleHandler;
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
+using RPG.Player;
+using RPG.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("FirstTimeInLocationEvent");
         }
 
-        public override int LocationMenu(BaseLocation location, Player.Player player, PlayerInventory playerInventory, LocationHandler.LocationHandler locationHandler, LocationCreator locationCreator)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
         {
             Console.Clear();
             location.PrintSprite();
@@ -48,23 +50,23 @@ namespace RPG.LocationSystem.LocationClasses
             switch (choice)
             {
                 case 1:
-                    return 1;
+                    
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     break;
 
                 case 2:
-                    return 2;
+                    
                     Console.Clear();
-                    player.PrintStats();
+                    playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
                 case 3:
-                    return 3;
+                    
                     Console.Clear();
-                    playerInventory.Display();
+                    playerParams.PlayerInventory.Display();
                     Console.ReadKey();
                     break;
 
@@ -72,31 +74,37 @@ namespace RPG.LocationSystem.LocationClasses
 
                     Console.WriteLine("You brace yourself and enter through the crack of the door.");
                     Console.ReadKey();
-                    return 8;
+                    
                     Console.Clear();
                     Console.WriteLine("Not Implemented");
                     Console.ReadKey();
                     break;
 
                 case 5:  // chamge/leave location
-                    return 5;
-                    locationHandler.ChangeLocation(location);
-                    location = locationCreator.CreateTownWithKey(locationHandler.CurrentLocationKey);
+                    
+                    locationParams.LocationHandler.ChangeLocation(location);
+                    location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     Console.WriteLine();
-                    locationHandler.FirstTimeInLocationCheckWithKey(location, player);
+                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
                     break;
 
                 default:
-                    return 9;
+                    
                     Console.Clear();
                     Console.WriteLine("Pick an option from the menu");
                     Console.ReadKey();
                     break;
 
             }
+
+            return location;
+
         }
+
+
+        //---
     }
 }

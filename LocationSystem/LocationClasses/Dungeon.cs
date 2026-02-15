@@ -1,6 +1,9 @@
 ﻿using RPG.BattleHandler;
+using RPG.DungeonGameBoard;
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
+using RPG.Player;
+using RPG.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +35,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("There is no other way around the mountains, you must go through");
         }
 
-        public override int LocationMenu(BaseLocation location, Player.Player player, PlayerInventory playerInventory, LocationHandler.LocationHandler locationHandler, LocationCreator locationCreator)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
         {
             Console.Clear();
             location.PrintSprite();
@@ -52,23 +55,23 @@ namespace RPG.LocationSystem.LocationClasses
             switch (choice)
             {
                 case 1:
-                    return 1;
+                    
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     break;
 
                 case 2:
-                    return 2;
+                    
                     Console.Clear();
-                    player.PrintStats();
+                    playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
                 case 3:
-                    return 3;
+                    
                     Console.Clear();
-                    playerInventory.Display();
+                    playerParams.PlayerInventory.Display();
                     Console.ReadKey();
                     break;
 
@@ -76,31 +79,41 @@ namespace RPG.LocationSystem.LocationClasses
 
                     Console.WriteLine("You brace yourself and enter through the crack of the door.");
                     Console.ReadKey();
-                    return 8;
-                    Console.Clear();
-                    Console.WriteLine("Not Implemented");
-                    Console.ReadKey();
+                    
+                    GameBoard gameBoard = new GameBoard();
+                    gameBoard.CreateGameBoard(location.BoardDimentions, 30);
+                    gameBoard.BeginDungeon(playerParams, battleParams);
+
+                    if (location.LocationKey == 9)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\nYou made your way through the Dungeon.");
+                        Console.ReadKey();
+                        Console.WriteLine("A new location has been unlocked");
+                        Console.ReadKey();
+                        locationParams.LocationHandler.DungeonCleared = true;
+                    }
                     break;
 
                 case 5:  // chamge/leave location
 
-                    if (locationHandler.DungeonCleared)
+                    if (locationParams.LocationHandler.DungeonCleared)
                     {
                         ConnectingLocations = [8, 10];
                     }
 
-                    return 5;
-                    locationHandler.ChangeLocation(location);
-                    location = locationCreator.CreateTownWithKey(locationHandler.CurrentLocationKey);
+                    
+                    locationParams.LocationHandler.ChangeLocation(location);
+                    location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     Console.WriteLine();
-                    locationHandler.FirstTimeInLocationCheckWithKey(location, player);
+                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
                     break;
 
                 default:
-                    return 9;
+                    
                     Console.Clear();
                     Console.WriteLine("Pick an option from the menu");
                     Console.ReadKey();
@@ -108,7 +121,12 @@ namespace RPG.LocationSystem.LocationClasses
 
             }
 
-            //-----
+            return location;
+            
         }
+
+
+
+        //---
     }
 }

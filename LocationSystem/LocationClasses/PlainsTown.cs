@@ -1,6 +1,7 @@
 ﻿using RPG.BattleHandler;
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
+using RPG.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,6 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override int LocationMenu(BaseLocation location, Player.Player player, PlayerInventory playerInventory, LocationHandler.LocationHandler locationHandler, LocationCreator locationCreator)
-        {
-            return base.LocationMenu(location, player, playerInventory, locationHandler, locationCreator); // might chance to add visit()
-        }
+
     }
 }

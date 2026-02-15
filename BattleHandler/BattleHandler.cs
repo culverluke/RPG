@@ -1,6 +1,7 @@
 ﻿using RPG.Inventory.PlayerInventory;
 using RPG.Monsters;
 using RPG.Monsters.MonsterClasses;
+using RPG.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,9 @@ namespace RPG.BattleHandler
         }
 
 
-        public void Battle(Player.Player player, Monster monster, PlayerInventory playerInventory, BattleText battleText)
+        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText)
         {
-            bool playerFaster = SpeedCheck(player, monster);
+            bool playerFaster = SpeedCheck(playerParams.Player, monster);
             bool playerDead = false;
             bool monsterDead = false;
 
@@ -31,23 +32,23 @@ namespace RPG.BattleHandler
                 Console.Clear();
                 if (playerFaster)
                 {
-                    battleText.PrintHealthValues(player, monster);
+                    battleText.PrintHealthValues(playerParams.Player, monster);
                     monster.PrintSprite();
 
-                    BattleMenu(player, monster, playerInventory, battleText);
+                    BattleMenu(playerParams, monster, battleText);
                     //monster.TakeDamage(player);
                     //Console.ReadKey();
 
                     if (monster.Health >= 1)
                     {
                         Console.Clear();
-                        battleText.PrintHealthValues(player, monster);
+                        battleText.PrintHealthValues(playerParams.Player, monster);
                         monster.PrintSprite();
                         battleText.PrintYouAreAttackedBy(monster);
-                        player.TakeDamage(monster);
+                        playerParams.Player.TakeDamage(monster);
                         Console.ReadKey();
 
-                        if (player.Health <= 0)
+                        if (playerParams.Player.Health <= 0)
                         {
                             playerDead = true;
                         }
@@ -61,19 +62,19 @@ namespace RPG.BattleHandler
                 }
                 else
                 {
-                    battleText.PrintHealthValues(player, monster);
+                    battleText.PrintHealthValues(playerParams.Player, monster);
                     monster.PrintSprite();
                     battleText.PrintYouAreAttackedBy(monster);
-                    player.TakeDamage(monster);
+                    playerParams.Player.TakeDamage(monster);
                     Console.ReadKey();
 
-                    if (player.Health >= 1)
+                    if (playerParams.Player.Health >= 1)
                     {
                         Console.Clear();
-                        battleText.PrintHealthValues(player, monster);
+                        battleText.PrintHealthValues(playerParams.Player, monster);
                         monster.PrintSprite();
 
-                        BattleMenu(player, monster, playerInventory, battleText);
+                        BattleMenu(playerParams, monster, battleText);
                         //monster.TakeDamage(player);
                         //Console.ReadKey();
 
@@ -92,13 +93,13 @@ namespace RPG.BattleHandler
 
             } while ((!playerDead) && (!monsterDead));
             Console.WriteLine("BattleOver");
-            battleText.PrintHealthValues(player, monster);
+            battleText.PrintHealthValues(playerParams.Player, monster);
             Console.ReadKey();
         }
 
 
 
-        public void BattleMenu(Player.Player player, Monster monster, PlayerInventory playerInventory, BattleText battleText)
+        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText)
         {
             int choice = 99;
 
@@ -106,7 +107,7 @@ namespace RPG.BattleHandler
             do
             {
                 Console.Clear();
-                battleText.PrintHealthValues(player, monster);
+                battleText.PrintHealthValues(playerParams.Player, monster);
                 monster.PrintSprite();
 
                 battleText.PrintBattleMenu();
@@ -119,11 +120,11 @@ namespace RPG.BattleHandler
                     case 1: // attack
                         Console.WriteLine("You attack");
                         Console.ReadKey();
-                        monster.TakeDamage(player);
+                        monster.TakeDamage(playerParams.Player);
                         break;
 
                     case 2: // use item
-                        playerInventory.PickItemToUse(player);
+                        playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
                         Console.ReadKey();
                         break;
 
@@ -131,8 +132,8 @@ namespace RPG.BattleHandler
                         Console.Clear();
                         Console.WriteLine();
 
-                        player.PrintName();
-                        player.PrintStats();
+                        playerParams.Player.PrintName();
+                        playerParams.Player.PrintStats();
                         Console.WriteLine();
                         monster.PrintName();
                         monster.PrintStats();

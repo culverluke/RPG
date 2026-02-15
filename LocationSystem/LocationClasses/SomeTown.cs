@@ -30,9 +30,6 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override int LocationMenu(BaseLocation location, Player.Player player, PlayerInventory playerInventory, LocationHandler.LocationHandler locationHandler, LocationCreator locationCreator)
-        {
-            return base.LocationMenu(location, player, playerInventory, locationHandler, locationCreator); // change at some point 
-        }
+
     }
 }

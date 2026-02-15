@@ -6,6 +6,7 @@ using RPG.Inventory.PlayerInventory;
 using RPG.Items;
 using RPG.Items.Consumables;
 using RPG.Items.Weapons;
+using RPG.LocationSystem;
 using RPG.LocationSystem.LocationClasses;
 using RPG.LocationSystem.LocationHandler;
 using RPG.Monsters.MonsterClasses;
@@ -25,10 +26,12 @@ TestFunctions testFunctions = new TestFunctions();
 ItemCreator itemCreator = systemCreator.CreateItemCreator();
 LocationCreator locationCreator = systemCreator.CreateLocationCreator();
 LocationHandler locationHandler = systemCreator.CreateLocationHandler();
-BaseLocation currentLocation = locationCreator.CreateDockTown(); // change back to pallet
+BaseLocation currentLocation = locationCreator.CreateFaireTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
+LocationParams locationParams = new LocationParams(locationHandler, locationCreator);
 
-PlayerInventory playerInventory = systemCreator.CreatePlayerInventory(); // CREATE INV CLASS WITH SHOP INV TO REUSE VARIABLE FOR TOWNS?
+PlayerInventory playerInventory = systemCreator.CreatePlayerInventory();
 Player player = systemCreator.CreatePlayerWithStats();
+PlayerParams playerParams = new PlayerParams(player, playerInventory);
 
 StartGameMessagesTest startGameMessages = new StartGameMessagesTest();
 BattleHandler battleHandler = new BattleHandler();
@@ -40,12 +43,14 @@ Monster minotaur = new Monster("Minotaur", 25, 15, 12, 18, MonsterSprites.Minota
 Monster harpy = new Monster("Harpy", 20, 14, 15, 15, MonsterSprites.Harpy, itemCreator.CreateClaws());
 
 List<Monster> monsterList = [skeleton, minotaur, harpy]; // Two or three monsterLists woods, dungeon, castle?
+BattleParams battleParams = new BattleParams(battleHandler, battleText, monsterList);
 
 Potion potion = new Potion();
 playerInventory.AddToInventory(potion);
 
 ShopCreator shopCreator = new ShopCreator();
 TownShop shop = new FaireShop(itemCreator);
+ShopParams shopParams = new ShopParams(shopCreator, itemCreator);
 
 //-------
 //startGameMessages.StartOfGame();
@@ -56,94 +61,13 @@ Console.ReadKey();
 Console.Clear();
 
 currentLocation.FirstTimeInLocationEvent(player);
-currentLocation.LocationBattle(battleHandler, player, playerInventory, itemCreator, battleText);
+currentLocation.LocationBattle(battleParams, playerParams, itemCreator);
 
 locationHandler.FirstTimeInPallet = false;
-
 
 do
 {
 
-    switch(currentLocation.LocationMenu(currentLocation, player, playerInventory, locationHandler, locationCreator))
-    {
-        case 1:
-            Console.Clear();
-        currentLocation.PrintMap();
-            Console.ReadKey();
-            break;
-
-        case 2:
-            Console.Clear();
-                player.PrintStats();
-            Console.ReadKey();
-            break;
-
-        case 3:
-            Console.Clear();
-            playerInventory.Display();
-            Console.ReadKey();
-            break;
-
-        case 4: // shop
-            Console.Clear();
-            shop = shopCreator.CreateShopWithKey(currentLocation.LocationKey, itemCreator);
-            shop.BuyOrSell(playerInventory);
-            Console.ReadKey();
-            break;
-
-        case 5:
-            locationHandler.ChangeLocation(currentLocation);
-            currentLocation = locationCreator.CreateTownWithKey(locationHandler.CurrentLocationKey);
-            Console.Clear();
-            currentLocation.PrintMap();
-            Console.ReadKey();
-            Console.WriteLine();
-            locationHandler.FirstTimeInLocationCheckWithKey(currentLocation, player);
-            break;
-            
-
-        case 6:
-            currentLocation.VisitPerson();
-
-            if (currentLocation.HasBattle)
-            {
-                currentLocation.LocationBattle(battleHandler, player, playerInventory, itemCreator, battleText);
-            }
-            break;
-
-
-        case 8:// add dungeon generation here
-            GameBoard gameBoard = new GameBoard();
-            gameBoard.CreateGameBoard(currentLocation.BoardDimentions, 30);
-            gameBoard.BeginDungeon(player, playerInventory, monsterList, battleHandler, battleText);
-
-            if(currentLocation.LocationKey == 4)
-            {
-                Console.Clear();
-                Console.WriteLine("\nYou made your way through the Woods.");
-                Console.ReadKey();
-                Console.WriteLine("A new location has been unlocked");
-                Console.ReadKey();
-                locationHandler.WoodsCleared = true;
-            }
-            else if(currentLocation.LocationKey == 9)
-            {
-                Console.Clear();
-                Console.WriteLine("\nYou made your way through the Dungeon.");
-                Console.ReadKey();
-                Console.WriteLine("A new location has been unlocked");
-                Console.ReadKey();
-                locationHandler.DungeonCleared = true;
-            }
-                break;
-
-        default:
-            Console.Clear();
-            Console.WriteLine("Pick an option from the menu");
-            Console.ReadKey();
-            break;
-
-    }
+    currentLocation = currentLocation.LocationMenu(currentLocation, playerParams, shopParams, locationParams, battleParams);
 
 } while (true);
-

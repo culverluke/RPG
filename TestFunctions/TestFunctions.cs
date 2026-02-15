@@ -17,9 +17,9 @@ namespace RPG.TestFunctions
     internal class TestFunctions
     {
 
-        public void BattleTest(BattleHandler.BattleHandler battleHandler, Player.Player player, Monster monster, PlayerInventory playerInventory, BattleText battleText)
+        public void BattleTest(BattleParams battleParams, PlayerParams playerParams, Monster monster)
         {
-            battleHandler.Battle(player, monster, playerInventory, battleText);
+            battleParams.BattleHandler.Battle(playerParams, monster, battleParams.BattleText);
         }
 
         public void TestSpeedCheck(BattleHandler.BattleHandler battleHandler, Player.Player player, Monster monster)

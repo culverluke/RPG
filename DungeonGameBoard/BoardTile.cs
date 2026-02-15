@@ -17,7 +17,7 @@ namespace RPG.DungeonGameBoard
         }
 
         public string Contents { get; set; }
-        public int X { get; set; }
+        public int X { get; set; }  //  VECTOR
         public int Y { get; set; }
         public int ChanceOfBattle { get; set; }
 
