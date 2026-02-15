@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPG.Shop
+namespace RPG.Shop.TownShops
 {
-    internal class KantoShop : TownShop
+    internal class FaireShop : TownShop
     {
-        public KantoShop(ItemCreator itemCreator)
+        public FaireShop(ItemCreator itemCreator)
         {
-            ShopKey = 3;
+            ShopKey = 2;
 
-            ShopInventory.AddToInventory(itemCreator.CreateIronAxe());
+            ShopInventory.AddToInventory(itemCreator.CreateIronSword());
             ShopInventory.AddToInventory(itemCreator.CreatePotion());
         }
 

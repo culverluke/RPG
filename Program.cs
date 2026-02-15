@@ -12,6 +12,7 @@ using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
 using RPG.Player;
 using RPG.Shop;
+using RPG.Shop.TownShops;
 using RPG.TestFunctions;
 
 /* FirstTimeInLocation text held in location.Class - Shop text held in shopKeeper.class? - locationMenu.Class
@@ -24,7 +25,7 @@ TestFunctions testFunctions = new TestFunctions();
 ItemCreator itemCreator = systemCreator.CreateItemCreator();
 LocationCreator locationCreator = systemCreator.CreateLocationCreator();
 LocationHandler locationHandler = systemCreator.CreateLocationHandler();
-BaseLocation currentLocation = locationCreator.CreateFaireTown(); // change back to pallet
+BaseLocation currentLocation = locationCreator.CreateDockTown(); // change back to pallet
 
 PlayerInventory playerInventory = systemCreator.CreatePlayerInventory(); // CREATE INV CLASS WITH SHOP INV TO REUSE VARIABLE FOR TOWNS?
 Player player = systemCreator.CreatePlayerWithStats();
@@ -136,7 +137,7 @@ do
             }
                 break;
 
-        case 9:
+        default:
             Console.Clear();
             Console.WriteLine("Pick an option from the menu");
             Console.ReadKey();
