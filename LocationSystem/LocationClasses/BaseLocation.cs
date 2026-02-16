@@ -22,15 +22,16 @@ namespace RPG.LocationSystem.LocationClasses
             Sprite = "";
         }
 
-        public int BoardDimentions { get; set; }
-
-        public bool IsDungeon = false;  // are fields so move them
-        public bool HasBattle = false;
         public string Name { get; set; }
         public int LocationKey { get; set; }
         public int[] ConnectingLocations { get; set; }
         public string Map { get; set; }
         public string Sprite { get; set; }
+        public int BoardDimentions { get; set; }
+
+
+        public bool IsDungeon = false;
+        public bool HasBattle = false;
 
 
         public virtual void FirstTimeInLocationEvent(Player.Player player)
@@ -69,11 +70,12 @@ namespace RPG.LocationSystem.LocationClasses
 
             int choice = 99;
 
-            Console.WriteLine("[1] - View Map");
-            Console.WriteLine("[2] - View Stats");
-            Console.WriteLine("[3] - View Inventory");
-            Console.WriteLine("[4] - Shop");
-            Console.WriteLine("[5] - Leave");
+            Console.WriteLine("[1] - Rest");
+            Console.WriteLine("[2] - View Map");
+            Console.WriteLine("[3] - View Stats");
+            Console.WriteLine("[4] - View Inventory");
+            Console.WriteLine("[5] - Shop");
+            Console.WriteLine("[6] - Leave");
             // add rest to re-set hp?
 
             Int32.TryParse(Console.ReadLine(), out choice);
@@ -81,36 +83,36 @@ namespace RPG.LocationSystem.LocationClasses
             switch (choice)
             {
                 case 1:
+                    playerParams.Player.Rest();
+                    break;
 
+                case 2:
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     break;
 
-                case 2:
-
+                case 3:
                     Console.Clear();
                     playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
-                case 3:
-
-                    Console.Clear();
-                    playerParams.PlayerInventory.Display();
-                    Console.ReadKey();
-                    break;
-
                 case 4:  //shop
-
                     Console.Clear();
-                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
-                    shopParams.Shop.BuyOrSell(playerParams.PlayerInventory);
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
                     Console.ReadKey();
                     break;
 
                 case 5:  // chamge/leave location
+                    Console.Clear();
+                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
+                    shopParams.Shop.BuyOrSell(playerParams);
+                    Console.ReadKey();
+                    
+                    break;
 
+                case 6:
                     locationParams.LocationHandler.ChangeLocation(location);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
@@ -121,7 +123,6 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 default:
-
                     Console.Clear();
                     Console.WriteLine("Pick an option from the menu");
                     Console.ReadKey();

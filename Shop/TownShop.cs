@@ -1,6 +1,7 @@
 ﻿using RPG.Inventory.PlayerInventory;
 using RPG.Inventory.ShopInventory;
 using RPG.Items;
+using RPG.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace RPG.Shop
         public int ShopKey { get; set; }
 
 
-        public void BuyOrSell(PlayerInventory playerInventory)
+        public void BuyOrSell(PlayerParams playerParams)
         {
             Console.Clear();
             Console.WriteLine("What would you like to do?");
@@ -38,11 +39,11 @@ namespace RPG.Shop
                 switch(choice)
                 {
                     case 1:// buy
-                        Buy(playerInventory);
+                        Buy(playerParams);
                         break;
 
                     case 2:// sell
-                        Sell(playerInventory);
+                        Sell(playerParams);
                         break;
 
                     case 0:
@@ -58,19 +59,19 @@ namespace RPG.Shop
 
             if (choice != 0)
             {
-                BuyOrSell(playerInventory);
+                BuyOrSell(playerParams);
             }
         }
 
-        public void Buy(PlayerInventory playerInventory)
+        public void Buy(PlayerParams playerParams)
         {
-           // ShopInventory.Display();
-            //Console.WriteLine("Select the item you want to buy");
+
             int choice = 99;
 
             do
             {
                 Console.Clear();
+                Console.WriteLine($"Player Gold - {playerParams.Player.Gold}\n");
                 ShopInventory.Display();
                 Console.WriteLine("Select the item you want to buy");
                 Console.WriteLine("\n0 to EXIT");
@@ -78,50 +79,59 @@ namespace RPG.Shop
 
                 if (choice > 0 && choice <= ShopInventory.InventoryList.Count())
                 {
-                    playerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
-                    //ShopInventory.InventoryList.Remove(ShopInventory.InventoryList[choice - 1]);
-                    Console.WriteLine($"\nYou bought the {ShopInventory.InventoryList[choice - 1].Name}");
-                    Console.ReadKey();
-                    choice = 99;
+                    if(playerParams.Player.Gold >= ShopInventory.InventoryList[choice - 1].Value)
+                    {
+                        playerParams.PlayerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
+                        Console.WriteLine($"\nYou bought the {ShopInventory.InventoryList[choice - 1].Name}");
+                        playerParams.Player.RemoveGold(ShopInventory.InventoryList[choice - 1].Value);
+                        Console.ReadKey();
+                        choice = 99;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You dont have enough Gold");
+                        Console.ReadKey();
+                    }
+
                 }
 
 
             } while (choice < 0 || choice > ShopInventory.InventoryList.Count());
 
 
-            if (choice > 0 && choice <= ShopInventory.InventoryList.Count())
-            {
-                playerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
+            //if (choice > 0 && choice <= ShopInventory.InventoryList.Count())
+            //{
+               // playerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
                 //ShopInventory.InventoryList.Remove(ShopInventory.InventoryList[choice - 1]);
-            }
+            //}
         }
 
-        public void Sell(PlayerInventory playerInventory)
+        public void Sell(PlayerParams playerParams)
         {
-            //playerInventory.Display();
-
             int choice = 99;
 
-            if(playerInventory.InventoryList.Count() > 0)
+            if(playerParams.PlayerInventory.InventoryList.Count() > 0)
             {
                 do
                 {
                     Console.Clear();
-                    playerInventory.Display();
+                    Console.WriteLine($"Player Gold - {playerParams.Player.Gold}\n");
+                    playerParams.PlayerInventory.Display();
                     Console.WriteLine("Select the item you want to sell");
                     Console.WriteLine("\n0 to EXIT");
                     int.TryParse(Console.ReadLine(), out choice);
 
-                    if (choice > 0 && choice <= playerInventory.InventoryList.Count())
+                    if (choice > 0 && choice <= playerParams.PlayerInventory.InventoryList.Count())
                     {
-                        //ShopInventory.AddToInventory(playerInventory.InventoryList[choice - 1]);
-                        Console.WriteLine($"\nYou sold the {playerInventory.InventoryList[choice - 1].Name}");
-                        playerInventory.RemoveFromInventory(playerInventory.InventoryList[choice - 1]);
+                        Console.WriteLine($"\nYou sold the {playerParams.PlayerInventory.InventoryList[choice - 1].Name}");
+                        Console.WriteLine($"You got {playerParams.PlayerInventory.InventoryList[choice - 1].Value} Gold");
+                        playerParams.Player.Gold += playerParams.PlayerInventory.InventoryList[choice - 1].Value;
+                        playerParams.PlayerInventory.RemoveFromInventory(playerParams.PlayerInventory.InventoryList[choice - 1]);
                         Console.ReadKey();
                         choice = 99;
                     }
 
-                    if(playerInventory.InventoryList.Count() <= 0)
+                    if(playerParams.PlayerInventory.InventoryList.Count() <= 0)
                     {
                         Console.WriteLine("\nYou have nothing left to sell.");
                         Console.ReadKey();
@@ -129,7 +139,7 @@ namespace RPG.Shop
                         break;
                     }
 
-                } while (choice < 0 || choice > playerInventory.InventoryList.Count());
+                } while (choice < 0 || choice > playerParams.PlayerInventory.InventoryList.Count());
             }
             else
             {

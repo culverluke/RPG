@@ -1,4 +1,5 @@
-﻿using RPG.Monsters.MonsterClasses;
+﻿using RPG.Monsters;
+using RPG.Monsters.MonsterClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,16 @@ namespace RPG.BattleHandler
 {
     internal class BattleParams
     {
-        public BattleParams(BattleHandler battleHandler, BattleText battleText, List<Monster> monsterList)
+        public BattleParams(BattleHandler battleHandler, BattleText battleText, MonsterLists monsterLists)
         {
             BattleHandler = battleHandler;
             BattleText = battleText;
-            MonsterList = monsterList;
+            MonsterLists = monsterLists;
         }
 
         public BattleHandler BattleHandler { get; set; }
         public BattleText BattleText { get; set; }
-        public List<Monster> MonsterList { get; set; }
+        public MonsterLists MonsterLists { get; set; }
+        //public List<Monster> MonsterList { get; set; }
     }
 }

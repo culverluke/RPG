@@ -10,7 +10,7 @@ namespace RPG.Monsters.MonsterClasses
     internal class Monster
     {
 
-        public Monster(string name, int maxHealth, int attack, int defence, int speed, string sprite, Weapon weapon)
+        public Monster(string name, int maxHealth, int attack, int defence, int speed, int goldDrop, string sprite, Weapon weapon)
         {
             Name = name;
             MaxHealth = maxHealth;
@@ -18,6 +18,7 @@ namespace RPG.Monsters.MonsterClasses
             Attack = attack;
             Defence = defence;
             Speed = speed;
+            GoldDrop = goldDrop;
             Sprite = sprite;
             Weapon = weapon;
         }
@@ -29,6 +30,7 @@ namespace RPG.Monsters.MonsterClasses
         public int Attack { get; set; } 
         public int Defence { get; set; } 
         public int Speed { get; set; } 
+        public int GoldDrop { get; set; }
         public string Sprite { get; }
         public Weapon Weapon { get; } 
 

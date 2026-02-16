@@ -1,5 +1,4 @@
-﻿using RPG.LocationSystem.LocationClasses;
-using RPG.LocationSystem.LocationHandler;
+﻿using RPG.LocationSystem.LocationHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;

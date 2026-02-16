@@ -94,6 +94,9 @@ namespace RPG.BattleHandler
             } while ((!playerDead) && (!monsterDead));
             Console.WriteLine("BattleOver");
             battleText.PrintHealthValues(playerParams.Player, monster);
+
+            Console.WriteLine($"{monster.Name} dropped {monster.GoldDrop} gold");
+            playerParams.Player.AddGold(monster.GoldDrop);
             Console.ReadKey();
         }
 

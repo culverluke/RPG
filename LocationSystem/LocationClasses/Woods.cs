@@ -34,7 +34,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
             Console.WriteLine("There is a big gate chained with a padlock.");
             Console.ReadKey();
-            Console.WriteLine("Once you go in there is no way out aaside from the other side.");
+            Console.WriteLine("Once you go in there is no way out aside from the other side.");
 
         }
 
@@ -46,40 +46,40 @@ namespace RPG.LocationSystem.LocationClasses
 
             int choice = 99;
 
-            Console.WriteLine("[1] - View Map");
-            Console.WriteLine("[2] - View Stats");
-            Console.WriteLine("[3] - View Inventory");
-            Console.WriteLine("[4] - Enter the Woods");
-            Console.WriteLine("[5] - Leave");
-            // add rest to re-set hp?
+            Console.WriteLine("[1] - Rest");
+            Console.WriteLine("[2] - View Map");
+            Console.WriteLine("[3] - View Stats");
+            Console.WriteLine("[4] - View Inventory");
+            Console.WriteLine("[5] - Enter the Woods");
+            Console.WriteLine("[6] - Leave");
 
             Int32.TryParse(Console.ReadLine(), out choice);
 
             switch (choice)
             {
                 case 1:
-                    
+                    playerParams.Player.Rest();
+                    break;
+
+                case 2:
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     break;
 
-                case 2:
-                    
+                case 3:
                     Console.Clear();
                     playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
-                case 3:
-                    
+                case 4:  
                     Console.Clear();
-                    playerParams.PlayerInventory.Display();
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
                     Console.ReadKey();
                     break;
 
-                case 4:  // dungeon
-
+                case 5:  
                     if (playerParams.Player.WoodsKey)
                     {
                         Console.WriteLine("You unlock the gate with the key the Woodsman gave you.");
@@ -87,9 +87,9 @@ namespace RPG.LocationSystem.LocationClasses
 
                         GameBoard gameBoard = new GameBoard();
                         gameBoard.CreateGameBoard(location.BoardDimentions, 30);
-                        gameBoard.BeginDungeon(playerParams, battleParams);
+                        gameBoard.BeginDungeon(4, playerParams, battleParams);
 
-                        if (location.LocationKey == 4)
+                        if (playerParams.Player.Health > 0)
                         {
                             Console.Clear();
                             Console.WriteLine("\nYou made your way through the Woods.");
@@ -110,13 +110,10 @@ namespace RPG.LocationSystem.LocationClasses
 
                         location = LocationMenu(location, playerParams, shopParams, locationParams, battleParams);
                     }
-
                     break;
 
-                case 5:  // chamge/leave location
-
-                    // if woodsCleared = false; send to faireTown / return 10
-                    if(locationParams.LocationHandler.WoodsCleared)
+                case 6:
+                    if (locationParams.LocationHandler.WoodsCleared)
                     {
                         ConnectingLocations = [2, 5];
                     }
@@ -131,7 +128,6 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 default:
-                    
                     Console.Clear();
                     Console.WriteLine("Pick an option from the menu");
                     Console.ReadKey();

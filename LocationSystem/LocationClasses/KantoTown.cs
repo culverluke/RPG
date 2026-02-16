@@ -49,7 +49,7 @@ namespace RPG.LocationSystem.LocationClasses
 
             // if(!player.KantoBattleComplete) {do battle}     else{do nothing}
              
-            Monster woodsman = new Monster("Woodsman", 25, 20, 17, 18, MonsterSprites.Woodsman, itemCreator.CreateIronAxe());
+            Monster woodsman = new Monster("Woodsman", 25, 20, 17, 18, 0, MonsterSprites.Woodsman, itemCreator.CreateIronAxe());
 
             battleParams.BattleHandler.Battle(playerParams, woodsman, battleParams.BattleText);
 
@@ -70,49 +70,48 @@ namespace RPG.LocationSystem.LocationClasses
 
             int choice = 99;
 
-            Console.WriteLine("[1] - View Map");
-            Console.WriteLine("[2] - View Stats");
-            Console.WriteLine("[3] - View Inventory");
-            Console.WriteLine("[4] - Shop");
-            Console.WriteLine("[5] - Leave");
-            Console.WriteLine("[6] - Visit Woodsman");
-            // add rest to re-set hp?
+            Console.WriteLine("[1] - Rest");
+            Console.WriteLine("[2] - View Map");
+            Console.WriteLine("[3] - View Stats");
+            Console.WriteLine("[4] - View Inventory");
+            Console.WriteLine("[5] - Shop");
+            Console.WriteLine("[6] - Leave");
+            Console.WriteLine("[7] - Visit Woodsman");
 
             Int32.TryParse(Console.ReadLine(), out choice);
 
             switch (choice)
             {
                 case 1:
-                    
+                    playerParams.Player.Rest();
+                    break;
+
+                case 2:
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     break;
 
-                case 2:
-                    
+                case 3:
                     Console.Clear();
                     playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
-                case 3:
-                    
-                    Console.Clear();
-                    playerParams.PlayerInventory.Display();
-                    Console.ReadKey();
-                    break;
-
                 case 4:  //shop
-                    
                     Console.Clear();
-                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
-                    shopParams.Shop.BuyOrSell(playerParams.PlayerInventory);
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
                     Console.ReadKey();
                     break;
 
                 case 5:  // chamge/leave location
-                    
+                    Console.Clear();
+                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
+                    shopParams.Shop.BuyOrSell(playerParams);
+                    Console.ReadKey();
+                    break;
+
+                case 6:  // visit person
                     locationParams.LocationHandler.ChangeLocation(location);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
@@ -122,8 +121,7 @@ namespace RPG.LocationSystem.LocationClasses
                     locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
                     break;
 
-                case 6:  // visit person
-                    
+                case 7:
                     location.VisitPerson();
 
                     if (location.HasBattle)

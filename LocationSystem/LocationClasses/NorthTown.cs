@@ -37,7 +37,7 @@ namespace RPG.LocationSystem.LocationClasses
 
         public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator)
         {
-            Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
+            Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, 5, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
 
             battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText);
 
@@ -50,7 +50,7 @@ namespace RPG.LocationSystem.LocationClasses
                 Console.ReadKey();
                 Console.Clear();
 
-                Monster banditLeader = new Monster("Bandit Leader", 35, 22, 12, 25, MonsterSprites.BanditLeader, itemCreator.CreateSteelSword());
+                Monster banditLeader = new Monster("Bandit Leader", 35, 22, 12, 25, 7, MonsterSprites.BanditLeader, itemCreator.CreateSteelSword());
 
                 battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText);
 
@@ -90,49 +90,48 @@ namespace RPG.LocationSystem.LocationClasses
 
             int choice = 99;
 
-            Console.WriteLine("[1] - View Map");
-            Console.WriteLine("[2] - View Stats");
-            Console.WriteLine("[3] - View Inventory");
-            Console.WriteLine("[4] - Shop");
-            Console.WriteLine("[5] - Leave");
-            Console.WriteLine("[6] - Offer to stop the bandits");
-            // add rest to re-set hp?
+            Console.WriteLine("[1] - Rest");
+            Console.WriteLine("[2] - View Map");
+            Console.WriteLine("[3] - View Stats");
+            Console.WriteLine("[4] - View Inventory");
+            Console.WriteLine("[5] - Shop");
+            Console.WriteLine("[6] - Leave");
+            Console.WriteLine("[7] - Offer to stop the bandits");
 
             Int32.TryParse(Console.ReadLine(), out choice);
 
             switch (choice)
             {
                 case 1:
-                    
+                    playerParams.Player.Rest();
+                    break;
+
+                case 2:
                     Console.Clear();
                     location.PrintMap();
                     Console.ReadKey();
                     break;
 
-                case 2:
-                    
+                case 3:
                     Console.Clear();
                     playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
-                case 3:
-                    
-                    Console.Clear();
-                    playerParams.PlayerInventory.Display();
-                    Console.ReadKey();
-                    break;
-
                 case 4:  //shop
-                    
                     Console.Clear();
-                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
-                    shopParams.Shop.BuyOrSell(playerParams.PlayerInventory);
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
                     Console.ReadKey();
                     break;
 
                 case 5:  // chamge/leave location
-                    
+                    Console.Clear();
+                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
+                    shopParams.Shop.BuyOrSell(playerParams);
+                    Console.ReadKey();
+                    break;
+
+                case 6:  // visit()
                     locationParams.LocationHandler.ChangeLocation(location);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
@@ -142,14 +141,13 @@ namespace RPG.LocationSystem.LocationClasses
                     locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
                     break;
 
-                case 6:  // visit()
+                case 7:
                     location.VisitPerson();
 
                     if (location.HasBattle)
                     {
                         location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator);
                     }
-                    break;
                     break;
 
                 default:

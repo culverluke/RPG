@@ -5,6 +5,7 @@ using RPG.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,23 +16,21 @@ namespace RPG.DungeonGameBoard
         public GameBoard()
         {
             TileList = new();
-            PlayerLocation = [1, 1];
             ExitLocation = [0, 0];
         }
 
         public GameBoard(int dimentions)
         {
             TileList = new();
-            PlayerLocation = [1, 1];
             ExitLocation = [0, 0];
             Dimentions = dimentions;
         }
 
         public List<BoardTile> TileList { get; set; }
         public int Dimentions { get; set; }
-        public int[] PlayerLocation { get; set; } // 0 is y axis  -  1 is x axis // USE A FUCKING VECTOR
         public int[] ExitLocation { get; set; }
 
+        public Vector2 PlayerLocation = new Vector2(1, 1);
         public bool GameOver = false;
 
 
@@ -75,7 +74,7 @@ namespace RPG.DungeonGameBoard
         {
             for (int i = 0; i < TileList.Count(); i++)
             {
-                if (PlayerLocation[0] == TileList[i].Y && PlayerLocation[1] == TileList[i].X)
+                if (PlayerLocation[0] == TileList[i].Coordinates.Y && PlayerLocation[1] == TileList[i].Coordinates.X)
                 {
                     TileList[i].Contents = "X";
                 }
@@ -103,7 +102,7 @@ namespace RPG.DungeonGameBoard
 
             for (int i = 0; i < TileList.Count(); i++)
             {
-                if (TileList[i].Y == ExitLocation[0] && TileList[i].X == ExitLocation[1])
+                if (TileList[i].Coordinates.Y == ExitLocation[0] && TileList[i].Coordinates.X == ExitLocation[1])
                 {
                     TileList[i].Contents = "E";
                 }
@@ -144,7 +143,7 @@ namespace RPG.DungeonGameBoard
             }
         }
 
-        public void BeginDungeon(PlayerParams playerParams, BattleParams battleParams)
+        public void BeginDungeon(int locationKey, PlayerParams playerParams, BattleParams battleParams)
         {
             PlayerController playerController = new PlayerController(); // add to sys creator
             do
@@ -153,7 +152,20 @@ namespace RPG.DungeonGameBoard
                 playerController.MovePlayer(this);
                 if (CheckForBattle())
                 {
-                    battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterList), battleParams.BattleText);
+                    switch(locationKey)
+                    {
+                        case 9: // NEEDS NEW LIST
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText);
+                            break;
+
+                        case 11: // NEEDS NEW LIST
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText);
+                            break;
+
+                        default:
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText);
+                            break;
+                    }
                 }
             } while (!CheckForGameOver(playerParams.Player));
         }

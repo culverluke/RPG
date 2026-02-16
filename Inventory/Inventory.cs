@@ -34,7 +34,7 @@ namespace RPG.Inventory
 
             foreach (var item in InventoryList)
             {
-                Console.WriteLine($"{count} - {item.Name}");
+                Console.WriteLine($"{count} - {item.Name} : {item.Value}g");
                 count++;
             }
         }

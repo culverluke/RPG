@@ -9,6 +9,7 @@ using RPG.Items.Weapons;
 using RPG.LocationSystem;
 using RPG.LocationSystem.LocationClasses;
 using RPG.LocationSystem.LocationHandler;
+using RPG.Monsters;
 using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
 using RPG.Player;
@@ -16,8 +17,7 @@ using RPG.Shop;
 using RPG.Shop.TownShops;
 using RPG.TestFunctions;
 
-/* FirstTimeInLocation text held in location.Class - Shop text held in shopKeeper.class? - locationMenu.Class
- * startOfGame class?
+/* gold, final boss?, final dungeon, 
  */
 
 SystemCreator systemCreator = new SystemCreator();
@@ -26,7 +26,7 @@ TestFunctions testFunctions = new TestFunctions();
 ItemCreator itemCreator = systemCreator.CreateItemCreator();
 LocationCreator locationCreator = systemCreator.CreateLocationCreator();
 LocationHandler locationHandler = systemCreator.CreateLocationHandler();
-BaseLocation currentLocation = locationCreator.CreateFaireTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
+BaseLocation currentLocation = locationCreator.CreatePlainsTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
 LocationParams locationParams = new LocationParams(locationHandler, locationCreator);
 
 PlayerInventory playerInventory = systemCreator.CreatePlayerInventory();
@@ -37,20 +37,16 @@ StartGameMessagesTest startGameMessages = new StartGameMessagesTest();
 BattleHandler battleHandler = new BattleHandler();
 BattleText battleText = new BattleText();
 
-Monster dad = new Monster("Dad", 20, 50, 12, 20, MonsterSprites.Dad, itemCreator.CreateIronSword()); // monster list need adding (whole monster stuff need fleshing out)
-Monster skeleton = new Monster("Skeleton", 20, 13, 12, 14, MonsterSprites.Skeleton, itemCreator.CreateIronAxe());
-Monster minotaur = new Monster("Minotaur", 25, 15, 12, 18, MonsterSprites.Minotaur, itemCreator.CreateClaws());
-Monster harpy = new Monster("Harpy", 20, 14, 15, 15, MonsterSprites.Harpy, itemCreator.CreateClaws());
 
-List<Monster> monsterList = [skeleton, minotaur, harpy]; // Two or three monsterLists woods, dungeon, castle?
-BattleParams battleParams = new BattleParams(battleHandler, battleText, monsterList);
+MonsterLists monsterLists = new MonsterLists(itemCreator);
+BattleParams battleParams = new BattleParams(battleHandler, battleText, monsterLists);
 
 Potion potion = new Potion();
 playerInventory.AddToInventory(potion);
 
-ShopCreator shopCreator = new ShopCreator();
+ShopCreator shopCreator = systemCreator.CreateShopCreator();
 TownShop shop = new FaireShop(itemCreator);
-ShopParams shopParams = new ShopParams(shopCreator, itemCreator);
+ShopParams shopParams = new ShopParams(shopCreator, itemCreator); // might remove ItemCreator from shopParamas
 
 //-------
 //startGameMessages.StartOfGame();

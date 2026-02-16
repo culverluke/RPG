@@ -12,7 +12,7 @@ namespace RPG.Player
 {
     internal class Player
     {
-        public Player() // Equip starting weapon?
+        public Player()
         {
             Name = "Player";
             MaxHealth = 50;
@@ -29,6 +29,7 @@ namespace RPG.Player
             Attack = 1000;
             Defence = defence;
             Speed = speed;
+            Gold = 5;
             CurrentWeapon = new IronDagger();
             WoodsKey = false;
         }
@@ -39,6 +40,7 @@ namespace RPG.Player
         public int Attack { get; set; }
         public int Defence { get; set; }
         public int Speed { get; set; } 
+        public int Gold { get; set; }
         public Weapon CurrentWeapon { get; set; }
         public bool WoodsKey { get; set; }
 
@@ -61,6 +63,7 @@ namespace RPG.Player
             Console.WriteLine($"Attack - {Attack}");
             Console.WriteLine($"Defence - {Defence}");
             Console.WriteLine($"Speed - {Speed}");
+            Console.WriteLine($"Gold - {Gold}");
             Console.WriteLine($"Weapon - {CurrentWeapon.Name}");
         }
 
@@ -79,6 +82,34 @@ namespace RPG.Player
             CurrentWeapon = weapon;
             Console.WriteLine($"You equip {weapon.Name}");
             playerInventory.RemoveFromInventory(CurrentWeapon);
+        }
+
+        public void SetHpToMax()
+        {
+            Health = MaxHealth;
+        }
+
+        public void Rest()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            PrintHealth();
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("\nYou rest to regain your health.\n");
+            SetHpToMax();
+            PrintHealth();
+            Console.ReadKey();
+        }
+
+        public void AddGold(int amount)
+        {
+            Gold += amount;
+        }
+
+        public void RemoveGold(int amount)
+        {
+            Gold -= amount;
         }
 
         //--------

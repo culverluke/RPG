@@ -1,9 +1,10 @@
 ﻿using RPG.DungeonGameBoard;
 using RPG.Inventory.PlayerInventory;
 using RPG.Items;
-using RPG.LocationSystem.LocationClasses;
+using RPG.LocationSystem;
 using RPG.LocationSystem.LocationHandler;
 using RPG.Player;
+using RPG.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,12 @@ namespace RPG.CreateSystems
             GameBoard gameBoard = new GameBoard();
             gameBoard.CreateGameBoard(dimentions, chanceOfBattle);
             return gameBoard;
+        }
+
+        public ShopCreator CreateShopCreator()
+        {
+            ShopCreator shopCreator = new ShopCreator();
+            return shopCreator;
         }
 
     }

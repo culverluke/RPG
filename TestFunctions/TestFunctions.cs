@@ -1,6 +1,7 @@
 ﻿using RPG.BattleHandler;
 using RPG.Inventory.PlayerInventory;
 using RPG.Items.Weapons;
+using RPG.LocationSystem;
 using RPG.LocationSystem.LocationClasses;
 using RPG.LocationSystem.LocationHandler;
 using RPG.Monsters;

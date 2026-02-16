@@ -1,4 +1,5 @@
 ﻿using RPG.BattleHandler;
+using RPG.DungeonGameBoard;
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
@@ -38,11 +39,12 @@ namespace RPG.LocationSystem.LocationClasses
 
             int choice = 99;
 
-            Console.WriteLine("[1] - View Map");
-            Console.WriteLine("[2] - View Stats");
-            Console.WriteLine("[3] - View Inventory");
-            Console.WriteLine("[4] - Enter the Castle");
-            Console.WriteLine("[5] - Leave");
+            Console.WriteLine("[1] - Rest");
+            Console.WriteLine("[2] - View Map");
+            Console.WriteLine("[3] - View Stats");
+            Console.WriteLine("[4] - View Inventory");
+            Console.WriteLine("[5] - Enter the Castle");
+            Console.WriteLine("[6] - Leave");
             // add rest to re-set hp?
 
             Int32.TryParse(Console.ReadLine(), out choice);
@@ -50,38 +52,48 @@ namespace RPG.LocationSystem.LocationClasses
             switch (choice)
             {
                 case 1:
-                    
-                    Console.Clear();
-                    location.PrintMap();
-                    Console.ReadKey();
+                    playerParams.Player.Rest();
                     break;
 
                 case 2:
+                    Console.Clear();
+                    location.PrintMap();
+                    Console.ReadKey();
                     
+                    break;
+
+                case 3:
                     Console.Clear();
                     playerParams.Player.PrintStats();
                     Console.ReadKey();
                     break;
 
-                case 3:
-                    
+                case 4: 
                     Console.Clear();
-                    playerParams.PlayerInventory.Display();
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
                     Console.ReadKey();
                     break;
 
-                case 4:  // dungeon
+                case 5:  
+                    Console.WriteLine("You enter the castle unsure of what you will find");
+                    Console.ReadKey();
 
-                    Console.WriteLine("You brace yourself and enter through the crack of the door.");
-                    Console.ReadKey();
-                    
-                    Console.Clear();
-                    Console.WriteLine("Not Implemented");
-                    Console.ReadKey();
+                    GameBoard gameBoard = new GameBoard();
+                    gameBoard.CreateGameBoard(location.BoardDimentions, 30);
+                    gameBoard.BeginDungeon(11, playerParams, battleParams);
+
+                    if (playerParams.Player.Health > 0)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\nYou made your way through the castle");
+                        Console.ReadKey();
+                        Console.WriteLine("The big bad awaits you");
+                        Console.ReadKey();
+                        Console.WriteLine("Not Implemented");
+                    }
                     break;
 
-                case 5:  // chamge/leave location
-                    
+                case 6:
                     locationParams.LocationHandler.ChangeLocation(location);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
@@ -92,7 +104,6 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 default:
-                    
                     Console.Clear();
                     Console.WriteLine("Pick an option from the menu");
                     Console.ReadKey();
