@@ -52,17 +52,17 @@ namespace RPG.LocationSystem.LocationHandler
 
         public Dictionary<int, string> CreateDictionary() // should be zero based
         {
-            LocationDictionary.Add(1, "Pallet Town");
-            LocationDictionary.Add(2, "Faire Town");
-            LocationDictionary.Add(3, "Kanto Town");
-            LocationDictionary.Add(4, "The Woods");
-            LocationDictionary.Add(5, "Iron Town");
-            LocationDictionary.Add(6, "North Town");
-            LocationDictionary.Add(7, "Some Town");
-            LocationDictionary.Add(8, "plains Town");
-            LocationDictionary.Add(9, "Dungeon");
-            LocationDictionary.Add(10, "Dock Town");
-            LocationDictionary.Add(11, "End");
+            LocationDictionary.Add(0, "Pallet Town");
+            LocationDictionary.Add(1, "Faire Town");
+            LocationDictionary.Add(2, "Kanto Town");
+            LocationDictionary.Add(3, "The Woods");
+            LocationDictionary.Add(4, "Iron Town");
+            LocationDictionary.Add(5, "North Town");
+            LocationDictionary.Add(6, "Some Town");
+            LocationDictionary.Add(7, "plains Town");
+            LocationDictionary.Add(8, "Dungeon");
+            LocationDictionary.Add(9, "Dock Town");
+            LocationDictionary.Add(10, "End");
 
             return LocationDictionary;
         }

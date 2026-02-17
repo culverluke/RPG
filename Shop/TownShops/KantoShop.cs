@@ -11,7 +11,7 @@ namespace RPG.Shop.TownShops
     {
         public KantoShop(ItemCreator itemCreator)
         {
-            ShopKey = 3;
+            ShopKey = 2;
 
             ShopInventory.AddToInventory(itemCreator.CreateIronAxe());
             ShopInventory.AddToInventory(itemCreator.CreatePotion());

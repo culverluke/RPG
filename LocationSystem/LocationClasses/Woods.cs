@@ -17,8 +17,8 @@ namespace RPG.LocationSystem.LocationClasses
         public Woods()
         {
             Name = "The Woods";
-            LocationKey = 4;
-            ConnectingLocations = [2];
+            LocationKey = 3;
+            ConnectingLocations = [1];
             Map = LocationMaps.MapSheet.Woods;
             Sprite = LocationSprites.LocationSprites.Woods;
             IsDungeon = true;
@@ -47,11 +47,8 @@ namespace RPG.LocationSystem.LocationClasses
             int choice = 99;
 
             Console.WriteLine("[1] - Rest");
-            Console.WriteLine("[2] - View Map");
-            Console.WriteLine("[3] - View Stats");
-            Console.WriteLine("[4] - View Inventory");
-            Console.WriteLine("[5] - Enter the Woods");
-            Console.WriteLine("[6] - Leave");
+            Console.WriteLine("[2] - Enter the Woods");
+            DisplayLatterMenu();
 
             Int32.TryParse(Console.ReadLine(), out choice);
 
@@ -61,25 +58,7 @@ namespace RPG.LocationSystem.LocationClasses
                     playerParams.Player.Rest();
                     break;
 
-                case 2:
-                    Console.Clear();
-                    location.PrintMap();
-                    Console.ReadKey();
-                    break;
-
-                case 3:
-                    Console.Clear();
-                    playerParams.Player.PrintStats();
-                    Console.ReadKey();
-                    break;
-
-                case 4:  
-                    Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
-                    Console.ReadKey();
-                    break;
-
-                case 5:  
+                case 2: //  enter
                     if (playerParams.Player.WoodsKey)
                     {
                         Console.WriteLine("You unlock the gate with the key the Woodsman gave you.");
@@ -112,10 +91,10 @@ namespace RPG.LocationSystem.LocationClasses
                     }
                     break;
 
-                case 6:
+                case 3: // leave
                     if (locationParams.LocationHandler.WoodsCleared)
                     {
-                        ConnectingLocations = [2, 5];
+                        ConnectingLocations = [1, 4];
                     }
 
                     locationParams.LocationHandler.ChangeLocation(location);
@@ -124,7 +103,25 @@ namespace RPG.LocationSystem.LocationClasses
                     location.PrintMap();
                     Console.ReadKey();
                     Console.WriteLine();
-                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
+                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player); 
+                    break;
+
+                case 4:  // inv
+                    Console.Clear();
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    Console.ReadKey();
+                    break;
+
+                case 5: // map
+                    Console.Clear();
+                    location.PrintMap();
+                    Console.ReadKey();
+                    break;
+
+                case 6: // stats
+                    Console.Clear();
+                    playerParams.Player.PrintStats();
+                    Console.ReadKey();
                     break;
 
                 default:
@@ -137,6 +134,8 @@ namespace RPG.LocationSystem.LocationClasses
             return location;
 
         }
+
+
         //-----
     }
 }

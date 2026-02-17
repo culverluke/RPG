@@ -17,8 +17,8 @@ namespace RPG.LocationSystem.LocationClasses
         public Dungeon()
         {
             Name = "Dungeon";
-            LocationKey = 9;
-            ConnectingLocations = [8];
+            LocationKey = 8;
+            ConnectingLocations = [7];
             Map = LocationMaps.MapSheet.Dungeon;
             Sprite = LocationSprites.LocationSprites.Dungeon;
             IsDungeon = true;
@@ -44,11 +44,8 @@ namespace RPG.LocationSystem.LocationClasses
             int choice = 99;
 
             Console.WriteLine("[1] - Rest");
-            Console.WriteLine("[2] - View Map");
-            Console.WriteLine("[3] - View Stats");
-            Console.WriteLine("[4] - View Inventory");
-            Console.WriteLine("[5] - Enter the Dungeon");
-            Console.WriteLine("[6] - Leave");
+            Console.WriteLine("[2] - Enter the Dungeon");
+            DisplayLatterMenu();
 
             Int32.TryParse(Console.ReadLine(), out choice);
 
@@ -58,28 +55,7 @@ namespace RPG.LocationSystem.LocationClasses
                     playerParams.Player.Rest();
                     break;
 
-                case 2:
-                    Console.Clear();
-                    location.PrintMap();
-                    Console.ReadKey();
-                    
-                    break;
-
-                case 3:
-                    Console.Clear();
-                    playerParams.Player.PrintStats();
-                    Console.ReadKey();
-                    
-                    break;
-
-                case 4:  // dungeon
-                    Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
-                    Console.ReadKey();
-                    
-                    break;
-
-                case 5:  // chamge/leave location
+                case 2: // enter
                     Console.WriteLine("You brace yourself and enter through the crack of the door.");
                     Console.ReadKey();
 
@@ -98,10 +74,10 @@ namespace RPG.LocationSystem.LocationClasses
                     }
                     break;
 
-                case 6:
+                case 3: // leave
                     if (locationParams.LocationHandler.DungeonCleared)
                     {
-                        ConnectingLocations = [8, 10];
+                        ConnectingLocations = [7, 9];
                     }
 
                     locationParams.LocationHandler.ChangeLocation(location);
@@ -110,7 +86,25 @@ namespace RPG.LocationSystem.LocationClasses
                     location.PrintMap();
                     Console.ReadKey();
                     Console.WriteLine();
-                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
+                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);        
+                    break;
+
+                case 4:  // inv
+                    Console.Clear();
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    Console.ReadKey();
+                    break;
+
+                case 5:  // map
+                    Console.Clear();
+                    location.PrintMap();
+                    Console.ReadKey();
+                    break;
+
+                case 6: // stats
+                    Console.Clear();
+                    playerParams.Player.PrintStats();
+                    Console.ReadKey();
                     break;
 
                 default:

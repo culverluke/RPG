@@ -15,47 +15,47 @@ namespace RPG.LocationSystem
 
             switch (locationKey)
             {
-                case 1:
+                case 0:
                     return CreatePalletTown();
                     break;
 
-                case 2:
+                case 1:
                     return CreateFaireTown();
                     break;
 
-                case 3:
+                case 2:
                     return CreateKantoTown();
                     break;
 
-                case 4:
+                case 3:
                     return CreateWoods();
                     break;
 
-                case 5:
+                case 4:
                     return CreateIronTown()
 ;                    break;
 
-                case 6:
+                case 5:
                     return CreateNorthTown();
                     break;
 
-                case 7:
+                case 6:
                     return CreateSomeTown();
                     break;
 
-                case 8:
+                case 7:
                     return CreatePlainsTown();
                     break;
 
-                case 9:
+                case 8:
                     return CreateDungeon();
                     break;
 
-                case 10:
+                case 9:
                     return CreateDockTown();
                     break;
 
-                case 11:
+                case 10:
                     return CreateEnd();
                     break;
             }

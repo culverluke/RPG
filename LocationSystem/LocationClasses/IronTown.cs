@@ -16,8 +16,8 @@ namespace RPG.LocationSystem.LocationClasses
         public IronTown()
         {
             Name = "Iron Town";
-            LocationKey = 5;
-            ConnectingLocations = [4, 6, 8];
+            LocationKey = 4;
+            ConnectingLocations = [3, 5, 7];
             Map = LocationMaps.MapSheet.IronTown;
             Sprite = LocationSprites.LocationSprites.IronTown;
         }
@@ -49,11 +49,8 @@ namespace RPG.LocationSystem.LocationClasses
             int choice = 99;
 
             Console.WriteLine("[1] - Rest");
-            Console.WriteLine("[2] - View Map");
-            Console.WriteLine("[3] - View Stats");
-            Console.WriteLine("[4] - View Inventory");
-            Console.WriteLine("[5] - Shop");
-            Console.WriteLine("[6] - Leave");
+            Console.WriteLine("[2] - Shop");
+            DisplayLatterMenu();
             Console.WriteLine("[7] - Listen in on locals");
 
             Int32.TryParse(Console.ReadLine(), out choice);
@@ -64,32 +61,15 @@ namespace RPG.LocationSystem.LocationClasses
                     playerParams.Player.Rest();
                     break;
 
-                case 2:
-                    Console.Clear();
-                    location.PrintMap();
-                    Console.ReadKey();
-                    break;
-
-                case 3:
-                    Console.Clear();
-                    playerParams.Player.PrintStats();
-                    Console.ReadKey();
-                    break;
-
-                case 4:  //shop
-                    Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
-                    Console.ReadKey();
-                    break;
-
-                case 5:  // chamge/leave location
+                case 2: // shop
                     Console.Clear();
                     shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
                     shopParams.Shop.BuyOrSell(playerParams);
                     Console.ReadKey();
+                    
                     break;
 
-                case 6:  // visit person
+                case 3: // leave
                     locationParams.LocationHandler.ChangeLocation(location);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
@@ -99,7 +79,25 @@ namespace RPG.LocationSystem.LocationClasses
                     locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
                     break;
 
-                case 7:
+                case 4:  // inv
+                    Console.Clear();
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    Console.ReadKey();
+                    break;
+
+                case 5:  // map
+                    Console.Clear();
+                    location.PrintMap();
+                    Console.ReadKey();
+                    break;
+
+                case 6:  // stats
+                    Console.Clear();
+                    playerParams.Player.PrintStats();
+                    Console.ReadKey();
+                    break;
+
+                case 7: // visit
                     location.VisitPerson();
 
                     if (location.HasBattle)

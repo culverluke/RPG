@@ -17,8 +17,8 @@ namespace RPG.LocationSystem.LocationClasses
         public End()
         {
             Name = "End";
-            LocationKey = 11;
-            ConnectingLocations = [10];
+            LocationKey = 10;
+            ConnectingLocations = [9];
             Map = LocationMaps.MapSheet.End;
             Sprite = LocationSprites.LocationSprites.End;
             IsDungeon = true;
@@ -40,12 +40,8 @@ namespace RPG.LocationSystem.LocationClasses
             int choice = 99;
 
             Console.WriteLine("[1] - Rest");
-            Console.WriteLine("[2] - View Map");
-            Console.WriteLine("[3] - View Stats");
-            Console.WriteLine("[4] - View Inventory");
-            Console.WriteLine("[5] - Enter the Castle");
-            Console.WriteLine("[6] - Leave");
-            // add rest to re-set hp?
+            Console.WriteLine("[2] - Enter the Castle");
+            DisplayLatterMenu();
 
             Int32.TryParse(Console.ReadLine(), out choice);
 
@@ -55,26 +51,7 @@ namespace RPG.LocationSystem.LocationClasses
                     playerParams.Player.Rest();
                     break;
 
-                case 2:
-                    Console.Clear();
-                    location.PrintMap();
-                    Console.ReadKey();
-                    
-                    break;
-
-                case 3:
-                    Console.Clear();
-                    playerParams.Player.PrintStats();
-                    Console.ReadKey();
-                    break;
-
-                case 4: 
-                    Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
-                    Console.ReadKey();
-                    break;
-
-                case 5:  
+                case 2: // enter
                     Console.WriteLine("You enter the castle unsure of what you will find");
                     Console.ReadKey();
 
@@ -90,10 +67,10 @@ namespace RPG.LocationSystem.LocationClasses
                         Console.WriteLine("The big bad awaits you");
                         Console.ReadKey();
                         Console.WriteLine("Not Implemented");
-                    }
+                    } 
                     break;
 
-                case 6:
+                case 3: // leave
                     locationParams.LocationHandler.ChangeLocation(location);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
@@ -101,6 +78,24 @@ namespace RPG.LocationSystem.LocationClasses
                     Console.ReadKey();
                     Console.WriteLine();
                     locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
+                    break;
+
+                case 4: // inv
+                    Console.Clear();
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    Console.ReadKey();
+                    break;
+
+                case 5:  // map
+                    Console.Clear();
+                    location.PrintMap();
+                    Console.ReadKey();
+                    break;
+
+                case 6: // stats
+                    Console.Clear();
+                    playerParams.Player.PrintStats();
+                    Console.ReadKey();
                     break;
 
                 default:

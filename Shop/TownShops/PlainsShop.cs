@@ -11,7 +11,7 @@ namespace RPG.Shop.TownShops
     {
         public PlainsShop(ItemCreator itemCreator)
         {
-            ShopKey = 8;
+            ShopKey = 7;
 
             ShopInventory.AddToInventory(itemCreator.CreateSteelSword());
             ShopInventory.AddToInventory(itemCreator.CreateSteelAxe());

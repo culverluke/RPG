@@ -11,7 +11,7 @@ namespace RPG.Shop.TownShops
     {
         public DockShop(ItemCreator itemCreator)
         {
-            ShopKey = 10;
+            ShopKey = 9;
 
             ShopInventory.AddToInventory(itemCreator.CreateSteelAxe());
             ShopInventory.AddToInventory(itemCreator.CreateSteelSword());

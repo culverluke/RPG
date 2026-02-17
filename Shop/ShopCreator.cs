@@ -15,27 +15,27 @@ namespace RPG.Shop
         {
             switch(locationKey)
             {
-                case 2:
+                case 1:
                     return CreateFaireShop(itemCreator);
                     break;
 
-                case 3:
+                case 2:
                     return CreateKantoShop(itemCreator);
                     break;
 
-                case 5:
+                case 4:
                     return CreateIronShop(itemCreator);
                     break;
 
-                case 6:
+                case 5:
                     return CreateNorthShop(itemCreator);
                     break;
 
-                case 8:
+                case 7:
                     return CreatePlainsShop(itemCreator);
                     break;
 
-                case 10:
+                case 9:
                     return CreateDockShop(itemCreator);
                     break;
 

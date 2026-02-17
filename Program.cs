@@ -17,7 +17,7 @@ using RPG.Shop;
 using RPG.Shop.TownShops;
 using RPG.TestFunctions;
 
-/* gold, final boss?, final dungeon, 
+/* final boss 
  */
 
 SystemCreator systemCreator = new SystemCreator();
@@ -26,7 +26,7 @@ TestFunctions testFunctions = new TestFunctions();
 ItemCreator itemCreator = systemCreator.CreateItemCreator();
 LocationCreator locationCreator = systemCreator.CreateLocationCreator();
 LocationHandler locationHandler = systemCreator.CreateLocationHandler();
-BaseLocation currentLocation = locationCreator.CreatePlainsTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
+BaseLocation currentLocation = locationCreator.CreatePalletTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
 LocationParams locationParams = new LocationParams(locationHandler, locationCreator);
 
 PlayerInventory playerInventory = systemCreator.CreatePlayerInventory();

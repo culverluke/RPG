@@ -6,6 +6,7 @@ using RPG.LocationSystem.LocationSprites;
 using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
 using RPG.Player;
+using RPG.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,8 @@ namespace RPG.LocationSystem.LocationClasses
         public PalletTown()
         {
             Name = "Pallet Town";
-            LocationKey = 1;
-            ConnectingLocations = [2];
+            LocationKey = 0;
+            ConnectingLocations = [1];
             Map = LocationMaps.MapSheet.PalletTown;
             Sprite = LocationSprites.LocationSprites.PalletTown;
             HasBattle = true;
@@ -49,9 +50,74 @@ namespace RPG.LocationSystem.LocationClasses
         }
 
 
-        //  viewMap, viewStats, viewInventory, shop, visit ?, leaveLocation
-        
-        
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
+        {
+            Console.Clear();
+            location.PrintSprite();
+            Console.WriteLine("\n");
+
+            int choice = 99;
+
+            Console.WriteLine("[1] - Rest");
+            Console.WriteLine("[2] - Shop");
+            DisplayLatterMenu();
+
+            Int32.TryParse(Console.ReadLine(), out choice);
+
+            switch (choice)
+            {
+                case 1:
+                    playerParams.Player.Rest();
+                    break;
+
+                case 2: // shop 
+                    Console.Clear();
+                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
+                    shopParams.Shop.BuyOrSell(playerParams);
+                    Console.ReadKey();
+                    break;
+
+                case 3: // leave
+                    locationParams.LocationHandler.ChangeLocation(location);
+                    location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
+                    Console.Clear();
+                    location.PrintMap();
+                    Console.ReadKey();
+                    Console.WriteLine();
+                    locationParams.LocationHandler.FirstTimeInLocationCheckWithKey(location, playerParams.Player);
+                    break;
+
+                case 4:  // inv
+                    Console.Clear();
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    Console.ReadKey();
+                    break;
+
+                case 5:  // map
+                    Console.Clear();
+                    location.PrintMap();
+                    Console.ReadKey();
+                    break;
+
+                case 6: // stats
+                    Console.Clear();
+                    playerParams.Player.PrintStats();
+                    Console.ReadKey();
+                    break;
+
+                default:
+                    Console.Clear();
+                    Console.WriteLine("Pick an option from the menu");
+                    Console.ReadKey();
+                    break;
+
+            }
+
+            return location;
+
+        }
+
+
 
         //---------------
     }

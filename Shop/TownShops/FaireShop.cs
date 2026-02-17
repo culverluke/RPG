@@ -11,7 +11,7 @@ namespace RPG.Shop.TownShops
     {
         public FaireShop(ItemCreator itemCreator)
         {
-            ShopKey = 2;
+            ShopKey = 1;
 
             ShopInventory.AddToInventory(itemCreator.CreateIronSword());
             ShopInventory.AddToInventory(itemCreator.CreatePotion());
