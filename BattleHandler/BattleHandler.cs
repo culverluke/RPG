@@ -21,7 +21,7 @@ namespace RPG.BattleHandler
         }
 
 
-        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText)
+        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput)
         {
             bool playerFaster = SpeedCheck(playerParams.Player, monster);
             bool playerDead = false;
@@ -35,7 +35,7 @@ namespace RPG.BattleHandler
                     battleText.PrintHealthValues(playerParams.Player, monster);
                     monster.PrintSprite();
 
-                    BattleMenu(playerParams, monster, battleText);
+                    BattleMenu(playerParams, monster, battleText, userInput);
                     //monster.TakeDamage(player);
                     //Console.ReadKey();
 
@@ -74,7 +74,7 @@ namespace RPG.BattleHandler
                         battleText.PrintHealthValues(playerParams.Player, monster);
                         monster.PrintSprite();
 
-                        BattleMenu(playerParams, monster, battleText);
+                        BattleMenu(playerParams, monster, battleText, userInput);
                         //monster.TakeDamage(player);
                         //Console.ReadKey();
 
@@ -102,7 +102,7 @@ namespace RPG.BattleHandler
 
 
 
-        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText)
+        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput)
         {
             int choice = 99;
 
@@ -115,7 +115,7 @@ namespace RPG.BattleHandler
 
                 battleText.PrintBattleMenu();
 
-                Int32.TryParse(Console.ReadLine(), out choice);
+                choice = userInput.GetValidInt();
 
 
                 switch (choice)
@@ -127,7 +127,7 @@ namespace RPG.BattleHandler
                         break;
 
                     case 2: // use item
-                        playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                        playerParams.PlayerInventory.PickItemToUse(playerParams.Player, userInput);
                         Console.ReadKey();
                         break;
 
@@ -160,7 +160,7 @@ namespace RPG.BattleHandler
                         break;
                 }
 
-            } while (choice != 1);
+            } while (choice != 1); // maybe add  != 2  so using an item costs a turn
 
         }
 

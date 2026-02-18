@@ -38,7 +38,7 @@ namespace RPG.LocationSystem.LocationClasses
 
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
         {
             Console.Clear();
             location.PrintSprite();
@@ -66,7 +66,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                         GameBoard gameBoard = new GameBoard();
                         gameBoard.CreateGameBoard(location.BoardDimentions, 30);
-                        gameBoard.BeginDungeon(4, playerParams, battleParams);
+                        gameBoard.BeginDungeon(4, playerParams, battleParams, userInput);
 
                         if (playerParams.Player.Health > 0)
                         {
@@ -87,7 +87,7 @@ namespace RPG.LocationSystem.LocationClasses
                         Console.WriteLine("You cannot carry on so have to go back");
                         Console.ReadKey();
 
-                        location = LocationMenu(location, playerParams, shopParams, locationParams, battleParams);
+                        location = LocationMenu(location, playerParams, shopParams, locationParams, battleParams, userInput);
                     }
                     break;
 
@@ -97,7 +97,7 @@ namespace RPG.LocationSystem.LocationClasses
                         ConnectingLocations = [1, 4];
                     }
 
-                    locationParams.LocationHandler.ChangeLocation(location);
+                    locationParams.LocationHandler.ChangeLocation(location, userInput);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
@@ -108,7 +108,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 case 4:  // inv
                     Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player, userInput);
                     Console.ReadKey();
                     break;
 

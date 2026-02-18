@@ -2,6 +2,7 @@
 using RPG.DungeonGameBoard;
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
+using RPG.Monsters.MonsterSprites;
 using RPG.Player;
 using RPG.Shop;
 using System;
@@ -31,7 +32,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("FirstTimeInLocationEvent");
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
         {
             Console.Clear();
             location.PrintSprite();
@@ -57,7 +58,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                     GameBoard gameBoard = new GameBoard();
                     gameBoard.CreateGameBoard(location.BoardDimentions, 30);
-                    gameBoard.BeginDungeon(11, playerParams, battleParams);
+                    gameBoard.BeginDungeon(11, playerParams, battleParams, userInput);
 
                     if (playerParams.Player.Health > 0)
                     {
@@ -71,7 +72,7 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 case 3: // leave
-                    locationParams.LocationHandler.ChangeLocation(location);
+                    locationParams.LocationHandler.ChangeLocation(location, userInput);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
@@ -82,7 +83,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 case 4: // inv
                     Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player, userInput);
                     Console.ReadKey();
                     break;
 

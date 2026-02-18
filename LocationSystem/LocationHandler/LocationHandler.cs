@@ -1,4 +1,5 @@
 ﻿using RPG.LocationSystem.LocationClasses;
+using RPG.UserInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,20 +64,20 @@ namespace RPG.LocationSystem.LocationHandler
             LocationDictionary.Add(8, "Dungeon");
             LocationDictionary.Add(9, "Dock Town");
             LocationDictionary.Add(10, "End");
-
+            
             return LocationDictionary;
         }
 
-        public void GetConnectingLocations(BaseLocation currentlocation)
+        public void GetConnectingLocations(BaseLocation currentLocation)
         {
-            foreach (int locationKey in currentlocation.ConnectingLocations)
+            foreach (int locationKey in currentLocation.ConnectingLocations)
             {
                 Console.Write($"[{locationKey}] - ");
                 Console.WriteLine(LocationDictionary[locationKey]);
             }
         }
 
-        public void ChangeLocation(BaseLocation currentLocation)
+        public void ChangeLocation(BaseLocation currentLocation, UserInput.UserInput userInput)
         {
             int locationChoice = 99;
             bool validChoice = false;
@@ -91,7 +92,7 @@ namespace RPG.LocationSystem.LocationHandler
                 GetConnectingLocations(currentLocation);
                 Console.WriteLine("Pick a connecting location");
 
-                Int32.TryParse(Console.ReadLine(), out locationChoice);
+                locationChoice = userInput.GetValidInt();
 
                 foreach (int locationKey in currentLocation.ConnectingLocations)
                 {

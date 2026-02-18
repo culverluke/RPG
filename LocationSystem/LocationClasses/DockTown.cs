@@ -3,6 +3,7 @@ using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
 using RPG.Shop;
+using RPG.UserInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
         {
             Console.Clear();
             location.PrintSprite();
@@ -44,7 +45,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("[2] - Shop");
             DisplayLatterMenu();
 
-            Int32.TryParse(Console.ReadLine(), out choice);
+            choice = userInput.GetValidInt();
 
             switch (choice)
             {
@@ -55,12 +56,12 @@ namespace RPG.LocationSystem.LocationClasses
                 case 2: // shop 
                     Console.Clear();
                     shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
-                    shopParams.Shop.BuyOrSell(playerParams);
+                    shopParams.Shop.BuyOrSell(playerParams, userInput);
                     Console.ReadKey();
                     break;
 
                 case 3: // leave
-                    locationParams.LocationHandler.ChangeLocation(location);
+                    locationParams.LocationHandler.ChangeLocation(location, userInput);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
@@ -71,7 +72,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 case 4:  // inv
                     Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player, userInput);
                     Console.ReadKey();
                     break;
 

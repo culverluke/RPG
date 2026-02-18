@@ -16,17 +16,20 @@ using RPG.Player;
 using RPG.Shop;
 using RPG.Shop.TownShops;
 using RPG.TestFunctions;
+using RPG.UserInput;
 
-/* final boss 
+/* final boss, saving and loading (should only need to save in player, playerInventory(playerParams) and locationHandler), userInput type
  */
 
 SystemCreator systemCreator = new SystemCreator();
 TestFunctions testFunctions = new TestFunctions();
 
+UserInput userInput = new(); // MOVE IT
+
 ItemCreator itemCreator = systemCreator.CreateItemCreator();
 LocationCreator locationCreator = systemCreator.CreateLocationCreator();
 LocationHandler locationHandler = systemCreator.CreateLocationHandler();
-BaseLocation currentLocation = locationCreator.CreatePalletTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
+BaseLocation currentLocation = locationCreator.CreatePlainsTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
 LocationParams locationParams = new LocationParams(locationHandler, locationCreator);
 
 PlayerInventory playerInventory = systemCreator.CreatePlayerInventory();
@@ -44,9 +47,12 @@ BattleParams battleParams = new BattleParams(battleHandler, battleText, monsterL
 Potion potion = new Potion();
 playerInventory.AddToInventory(potion);
 
+Weapon steelSword = new SteelSword();
+playerInventory.AddToInventory(steelSword);
+
 ShopCreator shopCreator = systemCreator.CreateShopCreator();
 TownShop shop = new FaireShop(itemCreator);
-ShopParams shopParams = new ShopParams(shopCreator, itemCreator); // might remove ItemCreator from shopParamas
+ShopParams shopParams = new ShopParams(shopCreator, itemCreator); // might remove ItemCreator from shopParams
 
 //-------
 //startGameMessages.StartOfGame();
@@ -57,13 +63,13 @@ Console.ReadKey();
 Console.Clear();
 
 currentLocation.FirstTimeInLocationEvent(player);
-currentLocation.LocationBattle(battleParams, playerParams, itemCreator);
+currentLocation.LocationBattle(battleParams, playerParams, itemCreator, userInput);
 
 locationHandler.FirstTimeInPallet = false;
 
 do
 {
 
-    currentLocation = currentLocation.LocationMenu(currentLocation, playerParams, shopParams, locationParams, battleParams);
+    currentLocation = currentLocation.LocationMenu(currentLocation, playerParams, shopParams, locationParams, battleParams, userInput);
 
 } while (true);

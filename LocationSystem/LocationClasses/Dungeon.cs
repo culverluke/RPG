@@ -35,7 +35,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("There is no other way around the mountains, you must go through");
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
         {
             Console.Clear();
             location.PrintSprite();
@@ -47,7 +47,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("[2] - Enter the Dungeon");
             DisplayLatterMenu();
 
-            Int32.TryParse(Console.ReadLine(), out choice);
+            choice = userInput.GetValidInt();
 
             switch (choice)
             {
@@ -61,7 +61,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                     GameBoard gameBoard = new GameBoard();
                     gameBoard.CreateGameBoard(location.BoardDimentions, 30);
-                    gameBoard.BeginDungeon(9, playerParams, battleParams);
+                    gameBoard.BeginDungeon(9, playerParams, battleParams, userInput);
 
                     if (playerParams.Player.Health > 0)
                     {
@@ -80,7 +80,7 @@ namespace RPG.LocationSystem.LocationClasses
                         ConnectingLocations = [7, 9];
                     }
 
-                    locationParams.LocationHandler.ChangeLocation(location);
+                    locationParams.LocationHandler.ChangeLocation(location, userInput);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
@@ -91,8 +91,8 @@ namespace RPG.LocationSystem.LocationClasses
 
                 case 4:  // inv
                     Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
-                    Console.ReadKey();
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player, userInput);
+                    //Console.ReadKey();
                     break;
 
                 case 5:  // map

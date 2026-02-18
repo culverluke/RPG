@@ -118,6 +118,29 @@ namespace RPG.Monsters.MonsterSprites {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///                 .&quot;-,.__
+        ///                 `.     `.  ,
+        ///              .--&apos;  .._,&apos;&quot;-&apos; `.
+        ///             .    .&apos;         `&apos;
+        ///             `.   /          ,&apos;
+        ///               `  &apos;--.   ,-&quot;&apos;
+        ///                `&quot;`   |  \
+        ///                   -. \, |
+        ///                    `--Y.&apos;      ___.
+        ///                         \     L._, \
+        ///               _.,        `.   &lt;  &lt;\                _
+        ///             ,&apos; &apos;           `, `.   | \            ( `
+        ///          ../, `.            `  |    .\`.           \ \_
+        ///         ,&apos; ,..  .    [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Charizard {
+            get {
+                return ResourceManager.GetString("Charizard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to                  ,#####,
         ///                 #_   _#
         ///                 |a` `a|

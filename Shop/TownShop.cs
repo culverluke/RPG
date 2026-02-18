@@ -2,6 +2,7 @@
 using RPG.Inventory.ShopInventory;
 using RPG.Items;
 using RPG.Player;
+using RPG.UserInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace RPG.Shop
         public int ShopKey { get; set; }
 
 
-        public void BuyOrSell(PlayerParams playerParams)
+        public void BuyOrSell(PlayerParams playerParams, UserInput.UserInput userInput)
         {
             Console.Clear();
             Console.WriteLine("What would you like to do?");
@@ -31,19 +32,18 @@ namespace RPG.Shop
             Console.WriteLine("[0] - EXIT");
 
             int choice = 99;
-
             do
             {
-                Int32.TryParse(Console.ReadLine(), out choice);
+                choice = userInput.GetValidInt();
 
-                switch(choice)
+                switch (choice)
                 {
                     case 1:// buy
-                        Buy(playerParams);
+                        Buy(playerParams, userInput);
                         break;
 
                     case 2:// sell
-                        Sell(playerParams);
+                        Sell(playerParams, userInput);
                         break;
 
                     case 0:
@@ -59,11 +59,11 @@ namespace RPG.Shop
 
             if (choice != 0)
             {
-                BuyOrSell(playerParams);
+                BuyOrSell(playerParams, userInput);
             }
         }
 
-        public void Buy(PlayerParams playerParams)
+        public void Buy(PlayerParams playerParams, UserInput.UserInput userInput)
         {
 
             int choice = 99;
@@ -75,11 +75,12 @@ namespace RPG.Shop
                 ShopInventory.Display();
                 Console.WriteLine("Select the item you want to buy");
                 Console.WriteLine("\n0 to EXIT");
-                int.TryParse(Console.ReadLine(), out choice);
+
+                choice = userInput.PickItemFromList(ShopInventory.InventoryList);
 
                 if (choice > 0 && choice <= ShopInventory.InventoryList.Count())
                 {
-                    if(playerParams.Player.Gold >= ShopInventory.InventoryList[choice - 1].Value)
+                    if (playerParams.Player.Gold >= ShopInventory.InventoryList[choice - 1].Value)
                     {
                         playerParams.PlayerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
                         Console.WriteLine($"\nYou bought the {ShopInventory.InventoryList[choice - 1].Name}");
@@ -92,21 +93,15 @@ namespace RPG.Shop
                         Console.WriteLine("You dont have enough Gold");
                         Console.ReadKey();
                     }
-
                 }
+                
 
 
             } while (choice < 0 || choice > ShopInventory.InventoryList.Count());
 
-
-            //if (choice > 0 && choice <= ShopInventory.InventoryList.Count())
-            //{
-               // playerInventory.AddToInventory(ShopInventory.InventoryList[choice - 1]);
-                //ShopInventory.InventoryList.Remove(ShopInventory.InventoryList[choice - 1]);
-            //}
         }
 
-        public void Sell(PlayerParams playerParams)
+        public void Sell(PlayerParams playerParams, UserInput.UserInput userInput)
         {
             int choice = 99;
 
@@ -119,7 +114,8 @@ namespace RPG.Shop
                     playerParams.PlayerInventory.Display();
                     Console.WriteLine("Select the item you want to sell");
                     Console.WriteLine("\n0 to EXIT");
-                    int.TryParse(Console.ReadLine(), out choice);
+
+                    choice = userInput.PickItemFromList(playerParams.PlayerInventory.InventoryList);
 
                     if (choice > 0 && choice <= playerParams.PlayerInventory.InventoryList.Count())
                     {
@@ -128,7 +124,7 @@ namespace RPG.Shop
                         playerParams.Player.Gold += playerParams.PlayerInventory.InventoryList[choice - 1].Value;
                         playerParams.PlayerInventory.RemoveFromInventory(playerParams.PlayerInventory.InventoryList[choice - 1]);
                         Console.ReadKey();
-                        choice = 99;
+                        choice = 99; // WE GO AGAIN!    
                     }
 
                     if(playerParams.PlayerInventory.InventoryList.Count() <= 0)

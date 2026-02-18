@@ -7,6 +7,7 @@ using RPG.LocationSystem.LocationHandler;
 using RPG.Monsters;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
+using RPG.UserInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,9 @@ namespace RPG.TestFunctions
     internal class TestFunctions
     {
 
-        public void BattleTest(BattleParams battleParams, PlayerParams playerParams, Monster monster)
+        public void BattleTest(BattleParams battleParams, PlayerParams playerParams, Monster monster, UserInput.UserInput userInput)
         {
-            battleParams.BattleHandler.Battle(playerParams, monster, battleParams.BattleText);
+            battleParams.BattleHandler.Battle(playerParams, monster, battleParams.BattleText, userInput);
         }
 
         public void TestSpeedCheck(BattleHandler.BattleHandler battleHandler, Player.Player player, Monster monster)
@@ -81,22 +82,22 @@ namespace RPG.TestFunctions
 
 
 
-        public void EndlessMoveLocation(LocationHandler locationHandler, BaseLocation currentLocation, LocationCreator locationCreator)
+        public void EndlessMoveLocation(LocationHandler locationHandler, BaseLocation currentLocation, LocationCreator locationCreator, UserInput.UserInput userInput)
         {
             do
             {
-                locationHandler.ChangeLocation(currentLocation);
+                locationHandler.ChangeLocation(currentLocation, userInput);
                 currentLocation = locationCreator.CreateTownWithKey(locationHandler.CurrentLocationKey);
                 locationHandler.ArriveAtLocation(currentLocation);
             } while (true);
         }
 
 
-        public void TestFirstTimeInLocationEvents(LocationHandler locationHandler, BaseLocation currentLocation, LocationCreator locationCreator, Player.Player player)
+        public void TestFirstTimeInLocationEvents(LocationHandler locationHandler, BaseLocation currentLocation, LocationCreator locationCreator, Player.Player player, UserInput.UserInput userInput)
         {
             do
             {
-                locationHandler.ChangeLocation(currentLocation);
+                locationHandler.ChangeLocation(currentLocation, userInput);
                 currentLocation = locationCreator.CreateTownWithKey(locationHandler.CurrentLocationKey);
                 locationHandler.ArriveAtLocation(currentLocation);
                 locationHandler.FirstTimeInLocationCheckWithKey(currentLocation, player);

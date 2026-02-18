@@ -29,7 +29,7 @@ namespace RPG.Player
             Attack = 1000;
             Defence = defence;
             Speed = speed;
-            Gold = 5;
+            Gold = 5000;
             CurrentWeapon = new IronDagger();
             WoodsKey = false;
         }

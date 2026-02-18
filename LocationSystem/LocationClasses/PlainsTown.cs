@@ -33,7 +33,7 @@ namespace RPG.LocationSystem.LocationClasses
         }
 
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
         {
             Console.Clear();
             location.PrintSprite();
@@ -56,12 +56,12 @@ namespace RPG.LocationSystem.LocationClasses
                 case 2: // shop 
                     Console.Clear();
                     shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
-                    shopParams.Shop.BuyOrSell(playerParams);
+                    shopParams.Shop.BuyOrSell(playerParams, userInput);
                     Console.ReadKey();
                     break;
 
                 case 3: // leave
-                    locationParams.LocationHandler.ChangeLocation(location);
+                    locationParams.LocationHandler.ChangeLocation(location, userInput);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
@@ -72,7 +72,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 case 4:  // inv
                     Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player, userInput);
                     Console.ReadKey();
                     break;
 

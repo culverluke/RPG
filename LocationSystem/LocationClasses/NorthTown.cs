@@ -35,11 +35,11 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput)
         {
             Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, 5, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
 
-            battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText);
+            battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText, userInput);
 
             if (playerParams.Player.Health > 0)
             {
@@ -52,7 +52,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 Monster banditLeader = new Monster("Bandit Leader", 35, 22, 12, 25, 7, MonsterSprites.BanditLeader, itemCreator.CreateSteelSword());
 
-                battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText);
+                battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText, userInput);
 
                 Console.Clear();
                 Console.WriteLine("You cut down the bandit leader and the rest scattered.");
@@ -82,7 +82,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
         {
             Console.Clear();
             location.PrintSprite();
@@ -106,12 +106,12 @@ namespace RPG.LocationSystem.LocationClasses
                 case 2: // shop
                     Console.Clear();
                     shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
-                    shopParams.Shop.BuyOrSell(playerParams);
+                    shopParams.Shop.BuyOrSell(playerParams, userInput);
                     Console.ReadKey();
                     break;
 
                 case 3: // leave
-                    locationParams.LocationHandler.ChangeLocation(location);
+                    locationParams.LocationHandler.ChangeLocation(location, userInput);
                     location = locationParams.LocationCreator.CreateTownWithKey(locationParams.LocationHandler.CurrentLocationKey);
                     Console.Clear();
                     location.PrintMap();
@@ -122,7 +122,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 case 4:  // inv
                     Console.Clear();
-                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player);
+                    playerParams.PlayerInventory.PickItemToUse(playerParams.Player, userInput);
                     Console.ReadKey();
                     break;
 
@@ -143,7 +143,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                     if (location.HasBattle)
                     {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator);
+                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput);
                     }
                     break;
 

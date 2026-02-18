@@ -11,26 +11,14 @@ namespace RPG.Inventory.PlayerInventory
     internal class PlayerInventory : Inventory
     {
 
-        public void PickItemToUse(Player.Player player)
+        public void PickItemToUse(Player.Player player, UserInput.UserInput userInput)
         {
             Display();
             Console.WriteLine("\n0 - EXIT");
 
             Console.WriteLine("Pick an item to use");
 
-            int choice = 0;
-
-            do
-            {
-                Int32.TryParse(Console.ReadLine(), out choice);
-
-                if(choice > InventoryList.Count() || choice < 0)
-                {
-                    Console.WriteLine("Pick a valid option");
-                }
-               
-
-            } while (choice > InventoryList.Count() || choice < 0);
+            int choice = userInput.PickItemFromList(InventoryList);
 
             if(choice != 0)
             {
