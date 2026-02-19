@@ -3,6 +3,7 @@ using RPG.DungeonGameBoard;
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using RPG.Shop;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,8 @@ namespace RPG.LocationSystem.LocationClasses
 
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
+                        BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
         {
             Console.Clear();
             location.PrintSprite();
@@ -66,7 +68,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                         GameBoard gameBoard = new GameBoard();
                         gameBoard.CreateGameBoard(location.BoardDimentions, 30);
-                        gameBoard.BeginDungeon(4, playerParams, battleParams, userInput);
+                        gameBoard.BeginDungeon(4, playerParams, battleParams, userInput, saveData);
 
                         if (playerParams.Player.Health > 0)
                         {
@@ -87,7 +89,7 @@ namespace RPG.LocationSystem.LocationClasses
                         Console.WriteLine("You cannot carry on so have to go back");
                         Console.ReadKey();
 
-                        location = LocationMenu(location, playerParams, shopParams, locationParams, battleParams, userInput);
+                        location = LocationMenu(location, playerParams, shopParams, locationParams, battleParams, userInput, saveData);
                     }
                     break;
 

@@ -4,6 +4,7 @@ using RPG.Items;
 using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using RPG.Shop;
 using System;
 using System.Collections.Generic;
@@ -35,11 +36,11 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData)
         {
             Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, 5, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
 
-            battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText, userInput);
+            battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText, userInput, saveData);
 
             if (playerParams.Player.Health > 0)
             {
@@ -52,7 +53,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 Monster banditLeader = new Monster("Bandit Leader", 35, 22, 12, 25, 7, MonsterSprites.BanditLeader, itemCreator.CreateSteelSword());
 
-                battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText, userInput);
+                battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText, userInput, saveData);
 
                 Console.Clear();
                 Console.WriteLine("You cut down the bandit leader and the rest scattered.");
@@ -82,7 +83,8 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
+                        BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
         {
             Console.Clear();
             location.PrintSprite();
@@ -143,7 +145,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                     if (location.HasBattle)
                     {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput);
+                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, saveData);
                     }
                     break;
 

@@ -2,6 +2,7 @@
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using RPG.UserInput;
 using System;
 using System.Collections.Generic;
@@ -144,7 +145,7 @@ namespace RPG.DungeonGameBoard
             }
         }
 
-        public void BeginDungeon(int locationKey, PlayerParams playerParams, BattleParams battleParams, UserInput.UserInput userInput)
+        public void BeginDungeon(int locationKey, PlayerParams playerParams, BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
         {
             PlayerController playerController = new PlayerController(); // add to sys creator
             do
@@ -156,15 +157,15 @@ namespace RPG.DungeonGameBoard
                     switch(locationKey)
                     {
                         case 9: // NEEDS NEW LIST
-                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput);
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, saveData);
                             break;
 
                         case 11: // NEEDS NEW LIST
-                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput);
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, saveData);
                             break;
 
                         default:
-                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput);
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, saveData);
                             break;
                     }
                 }

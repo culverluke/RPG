@@ -4,6 +4,7 @@ using RPG.Items;
 using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using RPG.Shop;
 using System;
 using System.Collections.Generic;
@@ -44,14 +45,14 @@ namespace RPG.LocationSystem.LocationClasses
         }
 
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData)
         {
 
             // if(!player.KantoBattleComplete) {do battle}     else{do nothing}
              
             Monster woodsman = new Monster("Woodsman", 25, 20, 17, 18, 0, MonsterSprites.Woodsman, itemCreator.CreateIronAxe());
 
-            battleParams.BattleHandler.Battle(playerParams, woodsman, battleParams.BattleText, userInput);
+            battleParams.BattleHandler.Battle(playerParams, woodsman, battleParams.BattleText, userInput, saveData);
 
             if(playerParams.Player.Health > 0)
             {
@@ -62,7 +63,8 @@ namespace RPG.LocationSystem.LocationClasses
             }
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
+                        BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
         {
             Console.Clear();
             location.PrintSprite();
@@ -123,7 +125,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                     if (location.HasBattle)
                     {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput);
+                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, saveData);
                     }
                     break;
 

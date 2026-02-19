@@ -6,6 +6,7 @@ using RPG.LocationSystem.LocationSprites;
 using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using RPG.Shop;
 using System;
 using System.Collections.Generic;
@@ -42,15 +43,16 @@ namespace RPG.LocationSystem.LocationClasses
 
 
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData)
         {
             Monster dad = new Monster("Dad", 20, 50, 12, 20, 0, MonsterSprites.Dad, itemCreator.CreateIronSword());
 
-            battleParams.BattleHandler.Battle(playerParams, dad, battleParams.BattleText, userInput);
+            battleParams.BattleHandler.Battle(playerParams, dad, battleParams.BattleText, userInput, saveData);
         }
 
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
+                        BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
         {
             Console.Clear();
             location.PrintSprite();

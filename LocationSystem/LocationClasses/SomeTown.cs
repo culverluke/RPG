@@ -2,6 +2,7 @@
 using RPG.Inventory.PlayerInventory;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using RPG.Shop;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,8 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput)
+        public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
+                        BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
         {
             Console.Clear();
             location.PrintSprite();

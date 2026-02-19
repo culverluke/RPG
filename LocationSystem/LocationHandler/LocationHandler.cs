@@ -31,10 +31,9 @@ namespace RPG.LocationSystem.LocationHandler
         }
 
 
-
-        public int CurrentLocationKey { get; set; }
         public Dictionary<int, string> LocationDictionary { get; }
 
+        public int CurrentLocationKey { get; set; }
         public bool FirstTimeInPallet { get; set; }
         public bool FirstTimeInFaire { get; set; }
         public bool FirstTimeInKanto { get; set; }

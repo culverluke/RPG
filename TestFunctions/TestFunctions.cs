@@ -7,6 +7,7 @@ using RPG.LocationSystem.LocationHandler;
 using RPG.Monsters;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using RPG.UserInput;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace RPG.TestFunctions
     internal class TestFunctions
     {
 
-        public void BattleTest(BattleParams battleParams, PlayerParams playerParams, Monster monster, UserInput.UserInput userInput)
+        public void BattleTest(BattleParams battleParams, PlayerParams playerParams, Monster monster, UserInput.UserInput userInput, SaveData saveData)
         {
-            battleParams.BattleHandler.Battle(playerParams, monster, battleParams.BattleText, userInput);
+            battleParams.BattleHandler.Battle(playerParams, monster, battleParams.BattleText, userInput, saveData);
         }
 
         public void TestSpeedCheck(BattleHandler.BattleHandler battleHandler, Player.Player player, Monster monster)

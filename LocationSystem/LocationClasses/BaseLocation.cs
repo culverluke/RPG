@@ -3,6 +3,7 @@ using RPG.Inventory.PlayerInventory;
 using RPG.Items;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using RPG.Shop;
 using RPG.UserInput;
 using System;
@@ -38,12 +39,13 @@ namespace RPG.LocationSystem.LocationClasses
         public virtual void VisitPerson()
         { } // Bad practice?
 
-        public virtual void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput)
+        public virtual void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData)
         { }
 
         public abstract void FirstTimeInLocationEvent(Player.Player player);
 
-        public abstract BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams, BattleParams battleParams, UserInput.UserInput userInput);
+        public abstract BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
+                        BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData);
 
         public void PrintSprite()
         {
@@ -61,6 +63,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("[4] - View Inventory");
             Console.WriteLine("[5] - View Map");
             Console.WriteLine("[6] - View Stats");
+            // ADD SAVE & QUIT
         }
 
         

@@ -2,6 +2,7 @@
 using RPG.Monsters;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
+using RPG.SaveAndLoad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace RPG.BattleHandler
         }
 
 
-        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput)
+        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, SaveData saveData)
         {
             bool playerFaster = SpeedCheck(playerParams.Player, monster);
             bool playerDead = false;
@@ -35,7 +36,7 @@ namespace RPG.BattleHandler
                     battleText.PrintHealthValues(playerParams.Player, monster);
                     monster.PrintSprite();
 
-                    BattleMenu(playerParams, monster, battleText, userInput);
+                    BattleMenu(playerParams, monster, battleText, userInput, saveData);
                     //monster.TakeDamage(player);
                     //Console.ReadKey();
 
@@ -74,7 +75,7 @@ namespace RPG.BattleHandler
                         battleText.PrintHealthValues(playerParams.Player, monster);
                         monster.PrintSprite();
 
-                        BattleMenu(playerParams, monster, battleText, userInput);
+                        BattleMenu(playerParams, monster, battleText, userInput, saveData);
                         //monster.TakeDamage(player);
                         //Console.ReadKey();
 
@@ -102,7 +103,7 @@ namespace RPG.BattleHandler
 
 
 
-        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput)
+        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, SaveData saveData)
         {
             int choice = 99;
 
@@ -145,8 +146,8 @@ namespace RPG.BattleHandler
                         break;
 
                     case 4: // save
-                        Console.WriteLine("Not Implemented");
-                        Console.ReadKey();
+                        saveData.SavePlayer(playerParams.Player);
+                        saveData.SavePlayerInventory(playerParams.PlayerInventory);
                         break;
 
                     case 5: // quit
