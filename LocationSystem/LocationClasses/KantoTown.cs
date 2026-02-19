@@ -1,6 +1,7 @@
 ﻿using RPG.BattleHandler;
 using RPG.Inventory.PlayerInventory;
 using RPG.Items;
+using RPG.LocationSystem.LocationHandler;
 using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
 using RPG.Player;
@@ -45,14 +46,14 @@ namespace RPG.LocationSystem.LocationClasses
         }
 
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData, LocationHandler.LocationHandler locationHandler)
         {
 
             // if(!player.KantoBattleComplete) {do battle}     else{do nothing}
              
             Monster woodsman = new Monster("Woodsman", 25, 20, 17, 18, 0, MonsterSprites.Woodsman, itemCreator.CreateIronAxe());
 
-            battleParams.BattleHandler.Battle(playerParams, woodsman, battleParams.BattleText, userInput, saveData);
+            battleParams.BattleHandler.Battle(playerParams, woodsman, battleParams.BattleText, userInput, saveData, locationHandler);
 
             if(playerParams.Player.Health > 0)
             {
@@ -125,7 +126,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                     if (location.HasBattle)
                     {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, saveData);
+                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, saveData, locationParams.LocationHandler);
                     }
                     break;
 

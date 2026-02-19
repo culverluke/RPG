@@ -1,4 +1,5 @@
 ﻿using RPG.Inventory.PlayerInventory;
+using RPG.LocationSystem.LocationHandler;
 using RPG.Monsters;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
@@ -22,7 +23,7 @@ namespace RPG.BattleHandler
         }
 
 
-        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, SaveData saveData)
+        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, SaveData saveData, LocationHandler locationHandler)
         {
             bool playerFaster = SpeedCheck(playerParams.Player, monster);
             bool playerDead = false;
@@ -36,7 +37,7 @@ namespace RPG.BattleHandler
                     battleText.PrintHealthValues(playerParams.Player, monster);
                     monster.PrintSprite();
 
-                    BattleMenu(playerParams, monster, battleText, userInput, saveData);
+                    BattleMenu(playerParams, monster, battleText, userInput, saveData, locationHandler);
                     //monster.TakeDamage(player);
                     //Console.ReadKey();
 
@@ -75,7 +76,7 @@ namespace RPG.BattleHandler
                         battleText.PrintHealthValues(playerParams.Player, monster);
                         monster.PrintSprite();
 
-                        BattleMenu(playerParams, monster, battleText, userInput, saveData);
+                        BattleMenu(playerParams, monster, battleText, userInput, saveData, locationHandler);
                         //monster.TakeDamage(player);
                         //Console.ReadKey();
 
@@ -103,7 +104,7 @@ namespace RPG.BattleHandler
 
 
 
-        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, SaveData saveData)
+        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, SaveData saveData, LocationHandler locationHandler)
         {
             int choice = 99;
 
@@ -148,6 +149,7 @@ namespace RPG.BattleHandler
                     case 4: // save
                         saveData.SavePlayer(playerParams.Player);
                         saveData.SavePlayerInventory(playerParams.PlayerInventory);
+                        saveData.SaveLocationHandler(locationHandler);
                         break;
 
                     case 5: // quit

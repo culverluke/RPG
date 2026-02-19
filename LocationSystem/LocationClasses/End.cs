@@ -60,7 +60,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                     GameBoard gameBoard = new GameBoard();
                     gameBoard.CreateGameBoard(location.BoardDimentions, 30);
-                    gameBoard.BeginDungeon(11, playerParams, battleParams, userInput, saveData);
+                    gameBoard.BeginDungeon(11, playerParams, battleParams, userInput, saveData, locationParams.LocationHandler);
 
                     if (playerParams.Player.Health > 0)
                     {

@@ -1,6 +1,7 @@
 ﻿using RPG.BattleHandler;
 using RPG.Inventory.PlayerInventory;
 using RPG.Items;
+using RPG.LocationSystem.LocationHandler;
 using RPG.Monsters.MonsterClasses;
 using RPG.Player;
 using RPG.SaveAndLoad;
@@ -39,7 +40,7 @@ namespace RPG.LocationSystem.LocationClasses
         public virtual void VisitPerson()
         { } // Bad practice?
 
-        public virtual void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData)
+        public virtual void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData, LocationHandler.LocationHandler locationHandler)
         { }
 
         public abstract void FirstTimeInLocationEvent(Player.Player player);

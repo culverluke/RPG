@@ -1,6 +1,7 @@
 ﻿using RPG.Inventory.PlayerInventory;
 using RPG.Items;
 using RPG.Items.Weapons;
+using RPG.LocationSystem.LocationHandler;
 using RPG.Player;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,6 @@ namespace RPG.SaveAndLoad
 
                 bool woodsKey = false;
                 Boolean.TryParse(playerStats[7], out woodsKey);
-
-                //string weaponName = playerStats[8];
-                //weaponName = string.Concat(weaponName.Where(c => !char.IsWhiteSpace(c)));
 
                 Weapon playerWeapon = (Weapon)Activator.CreateInstance(Type.GetType(playerStats[8]));
                 
@@ -92,14 +90,58 @@ namespace RPG.SaveAndLoad
                         playerInventory.InventoryList.Add(itemHolder);
                     }
 
-                    Console.WriteLine(item.ToString());
-                }
-
-                //Console.WriteLine();
+                    //Console.WriteLine(item.ToString());
+                }                
                 Console.ReadKey();
             }
 
-            //return playerInventory;
+        }
+
+
+        public void LoadLocationData(LocationHandler locationHandler)
+        {
+            if(File.Exists("LocationData.txt"))
+            {
+                List<string> dataList = [];
+
+                FileStream fileStream = File.Open("LocationData.txt", FileMode.Open);
+                StreamReader streamReader = new StreamReader(fileStream);
+
+                while(!streamReader.EndOfStream)
+                {
+                    dataList.Add(streamReader.ReadLine());
+                }
+                streamReader.Close();
+
+                int intHolder = 0;
+                int.TryParse(dataList[0], out intHolder);
+                locationHandler.CurrentLocationKey = intHolder;
+
+                List<bool> boolList = [];
+                bool boolHolder = false;
+
+                for(int i = 1; i < dataList.Count(); i++)
+                {
+                    bool.TryParse(dataList[i], out boolHolder);
+                    boolList.Add(boolHolder);
+                }
+
+                locationHandler.FirstTimeInPallet = boolList[0];
+                locationHandler.FirstTimeInFaire = boolList[1];
+                locationHandler.FirstTimeInKanto = boolList[2];
+                locationHandler.FirstTimeInWoods = boolList[3];
+                locationHandler.FirstTimeInIron = boolList[4];
+                locationHandler.FirstTimeInNorth = boolList[5];
+                locationHandler.FirstTimeInSome = boolList[6];
+                locationHandler.FirstTimeInPlains = boolList[7];
+                locationHandler.FirstTimeInDungeon = boolList[8];
+                locationHandler.FirstTimeInDock = boolList[9];
+                locationHandler.FirstTimeInEnd = boolList[10];
+                locationHandler.WoodsCleared = boolList[11];
+                locationHandler.DungeonCleared = boolList[12];
+
+            }
+
         }
 
 

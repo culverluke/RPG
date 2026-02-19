@@ -62,6 +62,7 @@ LoadData loadData = new();
 //startGameMessages.StartOfGame();
 loadData.LoadPlayer(player);
 loadData.LoadPlayerInventory(playerInventory);
+loadData.LoadLocationData(locationHandler);
 
 currentLocation.PrintMap();
 Console.WriteLine("\nYou are here");
@@ -69,7 +70,7 @@ Console.ReadKey();
 Console.Clear();
 
 currentLocation.FirstTimeInLocationEvent(player);
-currentLocation.LocationBattle(battleParams, playerParams, itemCreator, userInput, saveData);
+currentLocation.LocationBattle(battleParams, playerParams, itemCreator, userInput, saveData, locationHandler);
 
 locationHandler.FirstTimeInPallet = false;
 

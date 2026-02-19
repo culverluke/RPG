@@ -104,7 +104,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                     if (location.HasBattle)
                     {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, saveData);
+                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, saveData, locationParams.LocationHandler);
                     }
                     break;
 

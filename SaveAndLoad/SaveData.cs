@@ -25,7 +25,7 @@ namespace RPG.SaveAndLoad
                 streamWriter.WriteLine(item.ToString());
             }
             streamWriter.Close();
-            Console.WriteLine("SAVED");
+            //Console.WriteLine("SAVED");
         }
 
 
@@ -61,8 +61,36 @@ namespace RPG.SaveAndLoad
 
         public void SaveLocationHandler(LocationHandler locationHandler)
         {
+            string[] locationData = new string[]
+            {
+                locationHandler.CurrentLocationKey.ToString(),
+                locationHandler.FirstTimeInPallet.ToString(),
+                locationHandler.FirstTimeInFaire.ToString(),
+                locationHandler.FirstTimeInKanto.ToString(),
+                locationHandler.FirstTimeInWoods.ToString(),
+                locationHandler.FirstTimeInIron.ToString(),
+                locationHandler.FirstTimeInNorth.ToString(),
+                locationHandler.FirstTimeInSome.ToString(),
+                locationHandler.FirstTimeInPlains.ToString(),
+                locationHandler.FirstTimeInDungeon.ToString(),
+                locationHandler.FirstTimeInDock.ToString(),
+                locationHandler.FirstTimeInEnd.ToString(),
+                locationHandler.WoodsCleared.ToString(),
+                locationHandler.DungeonCleared.ToString()
+            };
+
+            FileStream fileStream = File.Open("LocationData.txt", FileMode.Create);
+            StreamWriter streamWriter = new StreamWriter(fileStream);
+
+            foreach(string field in locationData)
+            {
+                streamWriter.WriteLine(field);
+            }
+            streamWriter.Close();
 
         }
 
+
+        //---
     }
 }

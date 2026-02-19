@@ -1,4 +1,5 @@
-﻿using RPG.Monsters;
+﻿using RPG.LocationSystem.LocationHandler;
+using RPG.Monsters;
 using RPG.Monsters.MonsterClasses;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,5 @@ namespace RPG.BattleHandler
         public BattleHandler BattleHandler { get; set; }
         public BattleText BattleText { get; set; }
         public MonsterLists MonsterLists { get; set; }
-        //public List<Monster> MonsterList { get; set; }
     }
 }
