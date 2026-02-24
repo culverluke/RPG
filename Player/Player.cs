@@ -15,8 +15,8 @@ namespace RPG.Player
         public Player()
         {
             Name = "Player";
-            MaxHealth = 50;
-            Health = 50;
+            MaxHealth = 75;
+            Health = 75;
             CurrentWeapon = new IronDagger();
             WoodsKey = false;
         }
@@ -24,12 +24,12 @@ namespace RPG.Player
         public Player(string name, int attack, int defence, int speed)
         {
             Name = name;
-            MaxHealth = 50;
-            Health = 50;
+            MaxHealth = 75;
+            Health = 75;
             Attack = attack;
             Defence = defence;
             Speed = speed;
-            Gold = 5;
+            Gold = 10;
             CurrentWeapon = new IronDagger();
             WoodsKey = false;
         }
@@ -58,6 +58,7 @@ namespace RPG.Player
         public void PrintStats()
         {
             Console.WriteLine();
+            Console.WriteLine(Name);
             Console.WriteLine($"Max HP - {MaxHealth}");
             Console.WriteLine($"Current HP - {Health}");
             Console.WriteLine($"Attack - {Attack}");
@@ -110,6 +111,11 @@ namespace RPG.Player
         public void RemoveGold(int amount)
         {
             Gold -= amount;
+        }
+
+        public void SetPlayerName(string name)
+        {
+            Name = name;
         }
 
         //--------

@@ -62,6 +62,7 @@ namespace RPG.Monsters.MonsterClasses
         public void PrintStats()
         {
             Console.WriteLine();
+            Console.WriteLine(Name);
             Console.WriteLine($"Max HP - {MaxHealth}");
             Console.WriteLine($"Current HP - {Health}");
             Console.WriteLine($"Attack - {Attack}");

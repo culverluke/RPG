@@ -1,10 +1,13 @@
-﻿using RPG.DungeonGameBoard;
+﻿using RPG.BattleHandler;
+using RPG.DungeonGameBoard;
 using RPG.Inventory.PlayerInventory;
 using RPG.Items;
 using RPG.LocationSystem;
 using RPG.LocationSystem.LocationHandler;
+using RPG.Monsters;
 using RPG.Player;
 using RPG.Shop;
+using RPG.UserInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +37,14 @@ namespace RPG.CreateSystems
             return locationHandler;
         }
 
+        public LocationParams CreateLocationParams()
+        {
+            LocationHandler locationHandler = CreateLocationHandler();
+            LocationCreator locationCreator = CreateLocationCreator();
+            LocationParams locationParams = new LocationParams(locationHandler, locationCreator);
+            return locationParams;
+        }
+
         public PlayerInventory CreatePlayerInventory()
         {
             PlayerInventory playerInventory = new PlayerInventory();
@@ -57,11 +68,47 @@ namespace RPG.CreateSystems
             return player;
         }
 
+        public PlayerParams CreatePlayerParams()
+        {
+            Player.Player player = CreatePlayerWithStats();
+            PlayerInventory playerInventory = CreatePlayerInventory();
+            PlayerParams playerParams = new PlayerParams(player, playerInventory);
+            return playerParams;
+        }
+
         public GameBoard CreateNewGameboard(int dimentions, int chanceOfBattle)
         {
             GameBoard gameBoard = new GameBoard();
             gameBoard.CreateGameBoard(dimentions, chanceOfBattle);
             return gameBoard;
+        }
+
+        public BattleHandler.BattleHandler CreateBattleHandler()
+        {
+            BattleHandler.BattleHandler battleHandler = new BattleHandler.BattleHandler();
+            return battleHandler;
+        }
+
+        public BattleText CreateBattleText()
+        {
+            BattleText battleText = new BattleText();
+            return battleText;
+        }
+
+        public MonsterLists CreateMonsterLists(ItemCreator itemCreator)
+        {
+            MonsterLists monsterLists = new MonsterLists(itemCreator);
+            return monsterLists;
+
+        }
+
+        public BattleParams CreateBattleParams(ItemCreator itemCreator)
+        {
+            BattleHandler.BattleHandler battleHandler = CreateBattleHandler();
+            BattleText battleText = CreateBattleText();
+            MonsterLists monsterLists = CreateMonsterLists(itemCreator);
+            BattleParams battleParams = new BattleParams(battleHandler, battleText, monsterLists);
+            return battleParams;
         }
 
         public ShopCreator CreateShopCreator()
@@ -70,5 +117,19 @@ namespace RPG.CreateSystems
             return shopCreator;
         }
 
+        public ShopParams CreateShopParams(ItemCreator itemCreator)
+        {
+            ShopCreator shopCreator = CreateShopCreator();
+            ShopParams shopParams = new ShopParams(shopCreator, itemCreator);
+            return shopParams;
+        }
+
+        public UserInput.UserInput CreateUserInput()
+        {
+            UserInput.UserInput userInput = new UserInput.UserInput();
+            return userInput;
+        }
+
+        //------
     }
 }

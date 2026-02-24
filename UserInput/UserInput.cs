@@ -11,6 +11,33 @@ namespace RPG.UserInput
     internal class UserInput
     {
 
+        public string PickAName()
+        {
+            string name = "???";
+            Console.Clear();
+            Console.WriteLine();
+            Console.Write("Enter a name: ");
+
+            do
+            {
+                name = Console.ReadLine();
+
+                if(name == null)
+                {
+                    Console.WriteLine("INVALID");
+                    Console.ReadKey();
+                }
+
+            } while (name == null);
+
+            return name;
+        }
+
+        public void PickAValidText()
+        {
+            Console.WriteLine("Pick a valid option");
+            Console.ReadKey();
+        }
 
         public int GetValidInt()
         {
@@ -50,7 +77,24 @@ namespace RPG.UserInput
             return result;
         }
 
-        
+        public bool GetValidBool()
+        {
+            bool result = false;
+            string input = "";
+
+            Console.WriteLine("'Y' or 'N'");
+            Console.ReadLine();
+
+            if(input.ToLower().Contains('n'))
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
 
 
 
