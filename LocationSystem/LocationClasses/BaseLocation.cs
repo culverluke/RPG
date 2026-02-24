@@ -40,7 +40,7 @@ namespace RPG.LocationSystem.LocationClasses
         public virtual void VisitPerson()
         { } // Bad practice?
 
-        public virtual void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData, LocationHandler.LocationHandler locationHandler)
+        public virtual void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
         { }
 
         public abstract void FirstTimeInLocationEvent(Player.Player player);
@@ -64,6 +64,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("[4] - View Inventory");
             Console.WriteLine("[5] - View Map");
             Console.WriteLine("[6] - View Stats");
+            Console.WriteLine("[7] - Save");
             // ADD SAVE & QUIT
         }
 

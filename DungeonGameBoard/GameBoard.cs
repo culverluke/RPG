@@ -158,15 +158,15 @@ namespace RPG.DungeonGameBoard
                     switch(locationKey)
                     {
                         case 9: // NEEDS NEW LIST
-                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, saveData, locationHandler);
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, locationHandler);
                             break;
 
                         case 11: // NEEDS NEW LIST
-                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, saveData, locationHandler);
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, locationHandler);
                             break;
 
                         default:
-                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, saveData, locationHandler);
+                            battleParams.BattleHandler.Battle(playerParams, battleParams.BattleHandler.GetRandomMonsterFromList(battleParams.MonsterLists.WoodsMonsterList), battleParams.BattleText, userInput, locationHandler);
                             break;
                     }
                 }

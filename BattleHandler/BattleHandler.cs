@@ -23,7 +23,7 @@ namespace RPG.BattleHandler
         }
 
 
-        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, SaveData saveData, LocationHandler locationHandler)
+        public void Battle(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, LocationHandler locationHandler)
         {
             bool playerFaster = SpeedCheck(playerParams.Player, monster);
             bool playerDead = false;
@@ -37,7 +37,7 @@ namespace RPG.BattleHandler
                     battleText.PrintHealthValues(playerParams.Player, monster);
                     monster.PrintSprite();
 
-                    BattleMenu(playerParams, monster, battleText, userInput, saveData, locationHandler);
+                    BattleMenu(playerParams, monster, battleText, userInput, locationHandler);
                     //monster.TakeDamage(player);
                     //Console.ReadKey();
 
@@ -76,7 +76,7 @@ namespace RPG.BattleHandler
                         battleText.PrintHealthValues(playerParams.Player, monster);
                         monster.PrintSprite();
 
-                        BattleMenu(playerParams, monster, battleText, userInput, saveData, locationHandler);
+                        BattleMenu(playerParams, monster, battleText, userInput, locationHandler);
                         //monster.TakeDamage(player);
                         //Console.ReadKey();
 
@@ -104,7 +104,7 @@ namespace RPG.BattleHandler
 
 
 
-        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, SaveData saveData, LocationHandler locationHandler)
+        public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, LocationHandler locationHandler)
         {
             int choice = 99;
 
@@ -146,15 +146,10 @@ namespace RPG.BattleHandler
                         Console.ReadKey();
                         break;
 
-                    case 4: // save
-                        saveData.SavePlayer(playerParams.Player);
-                        saveData.SavePlayerInventory(playerParams.PlayerInventory);
-                        saveData.SaveLocationHandler(locationHandler);
-                        break;
-
-                    case 5: // quit
+                    case 4: // QUIT
                         Console.WriteLine("Not Implemented");
                         Console.ReadKey();
+                        Console.Clear();
                         break;
 
                     default:

@@ -36,11 +36,11 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData, LocationHandler.LocationHandler locationHandler)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
         {
             Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, 5, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
 
-            battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText, userInput, saveData, locationHandler);
+            battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText, userInput, locationHandler);
 
             if (playerParams.Player.Health > 0)
             {
@@ -53,7 +53,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 Monster banditLeader = new Monster("Bandit Leader", 35, 22, 12, 25, 7, MonsterSprites.BanditLeader, itemCreator.CreateSteelSword());
 
-                battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText, userInput, saveData, locationHandler);
+                battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText, userInput, locationHandler);
 
                 Console.Clear();
                 Console.WriteLine("You cut down the bandit leader and the rest scattered.");
@@ -95,7 +95,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("[1] - Rest");
             Console.WriteLine("[2] - Shop");
             DisplayLatterMenu();
-            Console.WriteLine("[7] - Offer to stop the bandits");
+            Console.WriteLine("[8] - Offer to stop the bandits");
 
             Int32.TryParse(Console.ReadLine(), out choice);
 
@@ -140,12 +140,18 @@ namespace RPG.LocationSystem.LocationClasses
                     Console.ReadKey();
                     break;
 
-                case 7: // visit
+                case 7:
+                    saveData.SaveLocationHandler(locationParams.LocationHandler);
+                    saveData.SavePlayer(playerParams.Player);
+                    saveData.SavePlayerInventory(playerParams.PlayerInventory);
+                    break;
+
+                case 8: // visit
                     location.VisitPerson();
 
                     if (location.HasBattle)
                     {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, saveData, locationParams.LocationHandler);
+                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
                     }
                     break;
 

@@ -53,7 +53,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("[1] - Rest");
             Console.WriteLine("[2] - Shop");
             DisplayLatterMenu();
-            Console.WriteLine("[7] - Listen in on locals");
+            Console.WriteLine("[8] - Listen in on locals");
 
             choice = userInput.GetValidInt();
 
@@ -99,12 +99,18 @@ namespace RPG.LocationSystem.LocationClasses
                     Console.ReadKey();
                     break;
 
-                case 7: // visit
+                case 7:
+                    saveData.SaveLocationHandler(locationParams.LocationHandler);
+                    saveData.SavePlayer(playerParams.Player);
+                    saveData.SavePlayerInventory(playerParams.PlayerInventory);
+                    break;
+
+                case 8: // visit
                     location.VisitPerson();
 
                     if (location.HasBattle)
                     {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, saveData, locationParams.LocationHandler);
+                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
                     }
                     break;
 

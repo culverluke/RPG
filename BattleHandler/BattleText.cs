@@ -15,8 +15,7 @@ namespace RPG.BattleHandler
             Console.WriteLine("[1] - Attack");
             Console.WriteLine("[2] - Use Item");
             Console.WriteLine("[3] - View Stats");
-            Console.WriteLine("[4] - Save");
-            Console.WriteLine("[5] - Quit\n");
+            Console.WriteLine("[4] - Quit\n");
         }
 
         public void PrintHealthValues(Player.Player player, Monster monster)

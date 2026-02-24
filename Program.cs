@@ -30,7 +30,7 @@ UserInput userInput = new(); // MOVE IT
 ItemCreator itemCreator = systemCreator.CreateItemCreator();
 LocationCreator locationCreator = systemCreator.CreateLocationCreator();
 LocationHandler locationHandler = systemCreator.CreateLocationHandler();
-BaseLocation currentLocation = locationCreator.CreatePlainsTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
+BaseLocation currentLocation = locationCreator.CreatePalletTown(); // CHANGE BACK TO PALLET AND CHANGE PLAYER STATS BACK
 LocationParams locationParams = new LocationParams(locationHandler, locationCreator);
 
 PlayerInventory playerInventory = systemCreator.CreatePlayerInventory();
@@ -45,11 +45,11 @@ BattleText battleText = new BattleText();
 MonsterLists monsterLists = new MonsterLists(itemCreator);
 BattleParams battleParams = new BattleParams(battleHandler, battleText, monsterLists);
 
-//Potion potion = new Potion();
-//playerInventory.AddToInventory(potion);
+Potion potion = new Potion();
+playerInventory.AddToInventory(potion);
 
-Weapon steelSword = new SteelSword(); // REMOVE
-playerInventory.AddToInventory(steelSword); //  REMOVE
+//Weapon steelSword = new SteelSword(); // REMOVE
+//playerInventory.AddToInventory(steelSword); //  REMOVE
 
 ShopCreator shopCreator = systemCreator.CreateShopCreator();
 TownShop shop = new FaireShop(itemCreator);
@@ -59,20 +59,30 @@ SaveData saveData = new();
 LoadData loadData = new();
 
 //-------
-//startGameMessages.StartOfGame();
+
 loadData.LoadPlayer(player);
 loadData.LoadPlayerInventory(playerInventory);
 loadData.LoadLocationData(locationHandler);
 
-currentLocation.PrintMap();
-Console.WriteLine("\nYou are here");
-Console.ReadKey();
-Console.Clear();
+if(locationHandler.FirstTimeInPallet)
+{
+    startGameMessages.StartOfGame();
 
-currentLocation.FirstTimeInLocationEvent(player);
-currentLocation.LocationBattle(battleParams, playerParams, itemCreator, userInput, saveData, locationHandler);
+    currentLocation.PrintMap();
+    Console.WriteLine("\nYou are here");
+    Console.ReadKey();
+    Console.Clear();
 
-locationHandler.FirstTimeInPallet = false;
+    currentLocation.FirstTimeInLocationEvent(player);
+    currentLocation.LocationBattle(battleParams, playerParams, itemCreator, userInput, locationHandler);
+
+    locationHandler.FirstTimeInPallet = false;
+}
+else
+{
+    currentLocation = locationCreator.CreateTownWithKey(locationHandler.CurrentLocationKey);
+}
+
 
 do
 {

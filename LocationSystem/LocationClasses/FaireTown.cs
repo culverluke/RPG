@@ -89,6 +89,12 @@ namespace RPG.LocationSystem.LocationClasses
                     Console.ReadKey();
                     break;
 
+                case 7:
+                    saveData.SaveLocationHandler(locationParams.LocationHandler);
+                    saveData.SavePlayer(playerParams.Player);
+                    saveData.SavePlayerInventory(playerParams.PlayerInventory);
+                    break;
+
                 default:
                     Console.Clear();
                     Console.WriteLine("Pick an option from the menu");

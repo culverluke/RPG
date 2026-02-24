@@ -43,11 +43,11 @@ namespace RPG.LocationSystem.LocationClasses
 
 
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, SaveData saveData, LocationHandler.LocationHandler locationHandler)
+        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
         {
             Monster dad = new Monster("Dad", 20, 50, 12, 20, 0, MonsterSprites.Dad, itemCreator.CreateIronSword());
 
-            battleParams.BattleHandler.Battle(playerParams, dad, battleParams.BattleText, userInput, saveData, locationHandler);
+            battleParams.BattleHandler.Battle(playerParams, dad, battleParams.BattleText, userInput, locationHandler);
         }
 
 
@@ -105,6 +105,12 @@ namespace RPG.LocationSystem.LocationClasses
                     Console.Clear();
                     playerParams.Player.PrintStats();
                     Console.ReadKey();
+                    break;
+
+                case 7:
+                    saveData.SaveLocationHandler(locationParams.LocationHandler);
+                    saveData.SavePlayer(playerParams.Player);
+                    saveData.SavePlayerInventory(playerParams.PlayerInventory);
                     break;
 
                 default:

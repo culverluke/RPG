@@ -24,12 +24,12 @@ namespace RPG.Player
         public Player(string name, int attack, int defence, int speed)
         {
             Name = name;
-            MaxHealth = 500;
-            Health = 500;
-            Attack = 1000;
+            MaxHealth = 50;
+            Health = 50;
+            Attack = attack;
             Defence = defence;
             Speed = speed;
-            Gold = 5000;
+            Gold = 5;
             CurrentWeapon = new IronDagger();
             WoodsKey = false;
         }

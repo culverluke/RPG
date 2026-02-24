@@ -20,9 +20,9 @@ namespace RPG.TestFunctions
     internal class TestFunctions
     {
 
-        public void BattleTest(BattleParams battleParams, PlayerParams playerParams, Monster monster, UserInput.UserInput userInput, SaveData saveData, LocationHandler locationHandler)
+        public void BattleTest(BattleParams battleParams, PlayerParams playerParams, Monster monster, UserInput.UserInput userInput, LocationHandler locationHandler)
         {
-            battleParams.BattleHandler.Battle(playerParams, monster, battleParams.BattleText, userInput, saveData, locationHandler);
+            battleParams.BattleHandler.Battle(playerParams, monster, battleParams.BattleText, userInput, locationHandler);
         }
 
         public void TestSpeedCheck(BattleHandler.BattleHandler battleHandler, Player.Player player, Monster monster)
