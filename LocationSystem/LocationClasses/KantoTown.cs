@@ -1,4 +1,5 @@
-﻿using RPG.BattleHandler;
+﻿using Microsoft.CodeAnalysis;
+using RPG.BattleHandler;
 using RPG.Inventory.PlayerInventory;
 using RPG.Items;
 using RPG.LocationSystem.LocationHandler;
@@ -24,9 +25,9 @@ namespace RPG.LocationSystem.LocationClasses
             ConnectingLocations = [1];
             Map = LocationMaps.MapSheet.KantoTown;
             Sprite = LocationSprites.LocationSprites.KantoTown;
-            HasBattle = true;
+            CustomEvent = VisitWoodsman;
+            LocationBattle = WoodsmanBattle;
         }
-
 
         public override void FirstTimeInLocationEvent(Player.Player player)
         {
@@ -35,7 +36,7 @@ namespace RPG.LocationSystem.LocationClasses
 
         }
 
-        public override void VisitPerson()
+        public void VisitWoodsman()
         {
             Console.WriteLine("You visit the local Woodsman to ask about the lock on the Woods");
             Console.ReadKey();
@@ -46,7 +47,7 @@ namespace RPG.LocationSystem.LocationClasses
         }
 
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
+        public void WoodsmanBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
         {
 
             // if(!player.KantoBattleComplete) {do battle}     else{do nothing}
@@ -62,6 +63,7 @@ namespace RPG.LocationSystem.LocationClasses
                 Console.ReadKey();
                 playerParams.Player.WoodsKey = true;
             }
+           
         }
 
         public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
@@ -128,12 +130,9 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 case 8: // visit
-                    location.VisitPerson();
+                    location.CustomEvent();
 
-                    if (location.HasBattle)
-                    {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
-                    }
+                    location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
                     break;
 
                 default:

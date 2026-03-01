@@ -1,4 +1,5 @@
-﻿using RPG.BattleHandler;
+﻿using Microsoft.CodeAnalysis;
+using RPG.BattleHandler;
 using RPG.Inventory.PlayerInventory;
 using RPG.Items;
 using RPG.LocationSystem.LocationHandler;
@@ -10,6 +11,7 @@ using RPG.UserInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,17 +33,13 @@ namespace RPG.LocationSystem.LocationClasses
         public string Map { get; set; }
         public string Sprite { get; set; }
         public int BoardDimentions { get; set; }
-
+        public Action? CustomEvent { get; set; }
+        public Action<BattleParams, PlayerParams, ItemCreator, UserInput.UserInput, LocationHandler.LocationHandler>? LocationBattle { get; set; }
+        public Optional<Action> Event { get; set; }
 
         public bool IsDungeon = false;
-        public bool HasBattle = false;
 
 
-        public virtual void VisitPerson()
-        { } // Bad practice?
-
-        public virtual void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
-        { }
 
         public abstract void FirstTimeInLocationEvent(Player.Player player);
 

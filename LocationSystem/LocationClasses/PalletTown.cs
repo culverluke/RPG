@@ -25,7 +25,7 @@ namespace RPG.LocationSystem.LocationClasses
             ConnectingLocations = [1];
             Map = LocationMaps.MapSheet.PalletTown;
             Sprite = LocationSprites.LocationSprites.PalletTown;
-            HasBattle = true;
+            LocationBattle = DadBattle;
         }
 
 
@@ -43,7 +43,7 @@ namespace RPG.LocationSystem.LocationClasses
 
 
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
+        public void DadBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
         {
             Monster dad = new Monster("Dad", 20, 50, 12, 20, 0, MonsterSprites.Dad, itemCreator.CreateIronSword());
 

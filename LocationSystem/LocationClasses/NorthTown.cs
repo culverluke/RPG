@@ -23,7 +23,8 @@ namespace RPG.LocationSystem.LocationClasses
             ConnectingLocations = [4, 6];
             Map = LocationMaps.MapSheet.NorthTown;
             Sprite = LocationSprites.LocationSprites.NorthTown;
-            HasBattle = true;
+            CustomEvent = StopBandits;
+            LocationBattle = BanditBattle;
         }
 
         public override void FirstTimeInLocationEvent(Player.Player player)
@@ -36,7 +37,25 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override void LocationBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
+        public void StopBandits()
+        {
+            Console.WriteLine("You walk up to a group of villagers and offer to stop the bandits.");
+            Console.ReadKey();
+            Console.WriteLine("They look you up and down doubting whether you are up to the task.");
+            Console.ReadKey();
+            Console.WriteLine("They agree they dont have much of a choice and point you in their direction.");
+            Console.ReadKey();
+
+            Console.Clear();
+            Console.WriteLine("You arrive at the bandits hideout, but they wont let you see their leader.");
+            Console.ReadKey();
+            Console.WriteLine("\"If you want to see the boss you'll have to go through me first!\"");
+            Console.ReadKey();
+            Console.WriteLine("A large proud man steps up and draws his sword.");
+            Console.ReadKey();
+        }
+
+        public void BanditBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
         {
             Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, 5, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
 
@@ -65,23 +84,6 @@ namespace RPG.LocationSystem.LocationClasses
             }
         }
 
-        public override void VisitPerson()
-        {
-            Console.WriteLine("You walk up to a group of villagers and offer to stop the bandits.");
-            Console.ReadKey();
-            Console.WriteLine("They look you up and down doubting whether you are up to the task.");
-            Console.ReadKey();
-            Console.WriteLine("They agree they dont have much of a choice and point you in their direction.");
-            Console.ReadKey();
-
-            Console.Clear();
-            Console.WriteLine("You arrive at the bandits hideout, but they wont let you see their leader.");
-            Console.ReadKey();
-            Console.WriteLine("\"If you want to see the boss you'll have to go through me first!\"");
-            Console.ReadKey();
-            Console.WriteLine("A large proud man steps up and draws his sword.");
-            Console.ReadKey();
-        }
 
         public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
                         BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
@@ -147,9 +149,9 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 case 8: // visit
-                    location.VisitPerson();
+                    location.CustomEvent();
 
-                    if (location.HasBattle)
+                    if (LocationBattle != null)
                     {
                         location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
                     }

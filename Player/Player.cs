@@ -24,8 +24,8 @@ namespace RPG.Player
         public Player(string name, int attack, int defence, int speed)
         {
             Name = name;
-            MaxHealth = 75;
-            Health = 75;
+            MaxHealth = 100;
+            Health = 100;
             Attack = attack;
             Defence = defence;
             Speed = speed;

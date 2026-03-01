@@ -21,6 +21,7 @@ namespace RPG.LocationSystem.LocationClasses
             ConnectingLocations = [3, 5, 7];
             Map = LocationMaps.MapSheet.IronTown;
             Sprite = LocationSprites.LocationSprites.IronTown;
+            CustomEvent = ListenToLocals;
         }
 
         public override void FirstTimeInLocationEvent(Player.Player player)
@@ -31,7 +32,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
         }
 
-        public override void VisitPerson()
+        public void ListenToLocals()
         {
             Console.WriteLine("You overhear the locals talking about a Castle Lord in the Island's Castle.");
             Console.ReadKey();
@@ -40,6 +41,7 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("\"If only someone would kill him then men would go back\"");
             Console.ReadKey();
         }
+
 
         public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
                         BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
@@ -106,9 +108,9 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 case 8: // visit
-                    location.VisitPerson();
+                    location.CustomEvent();
 
-                    if (location.HasBattle)
+                    if (LocationBattle != null)
                     {
                         location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
                     }

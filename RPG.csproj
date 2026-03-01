@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="LocationSystem\LocationMaps\MapSheet.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
