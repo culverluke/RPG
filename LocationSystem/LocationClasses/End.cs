@@ -1,6 +1,7 @@
 ﻿using RPG.BattleHandler;
 using RPG.DungeonGameBoard;
 using RPG.Inventory.PlayerInventory;
+using RPG.Items;
 using RPG.Monsters.MonsterClasses;
 using RPG.Monsters.MonsterSprites;
 using RPG.Player;
@@ -25,6 +26,7 @@ namespace RPG.LocationSystem.LocationClasses
             Sprite = LocationSprites.LocationSprites.End;
             IsDungeon = true;
             BoardDimentions = 20;
+            LocationBattle = FinalBattle;
         }
 
 
@@ -32,6 +34,21 @@ namespace RPG.LocationSystem.LocationClasses
         {
             Console.WriteLine("FirstTimeInLocationEvent");
         }
+
+        public void FinalBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
+        {
+            Monster charizard = new Monster("Charizard", 40, 35, 20, 30, 100, MonsterSprites.Charizard, itemCreator.CreateClaws());
+
+            battleParams.BattleHandler.Battle(playerParams, charizard, battleParams.BattleText, userInput, locationHandler);
+
+            if(playerParams.Player.Health > 0)
+            {
+                Console.Clear();
+                Console.WriteLine("\n\n\t\t\t\t\tCongratulations you beat the game!");
+                Console.ReadKey();
+            }
+        }
+
 
         public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
                         BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)
@@ -69,7 +86,12 @@ namespace RPG.LocationSystem.LocationClasses
                         Console.ReadKey();
                         Console.WriteLine("The big bad awaits you");
                         Console.ReadKey();
-                        Console.WriteLine("Not Implemented");
+
+                        if(LocationBattle != null)
+                        {
+                            LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
+                        }
+
                     } 
                     break;
 

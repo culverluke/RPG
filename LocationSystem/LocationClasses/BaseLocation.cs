@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace RPG.LocationSystem.LocationClasses
         public int BoardDimentions { get; set; }
         public Action? CustomEvent { get; set; }
         public Action<BattleParams, PlayerParams, ItemCreator, UserInput.UserInput, LocationHandler.LocationHandler>? LocationBattle { get; set; }
-        public Optional<Action> Event { get; set; }
+        public Optional<Action> Event { get; }
 
         public bool IsDungeon = false;
 

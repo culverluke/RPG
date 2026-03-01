@@ -26,7 +26,7 @@ namespace RPG.Items.Weapons
             Name = "Steel Axe";
             Weight = 6f;
             Value = 18;
-            Power = 20;
+            Power = 30;
             WeaponSpeed = 0.6f;
         }
 

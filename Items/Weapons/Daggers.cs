@@ -27,7 +27,7 @@ namespace RPG.Items.Weapons
             Name = "Steel Dagger";
             Weight = 1f;
             Value = 10;
-            Power = 12;
+            Power = 15;
             WeaponSpeed = 1f;
         }
 

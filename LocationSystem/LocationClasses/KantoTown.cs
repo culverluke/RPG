@@ -130,8 +130,6 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 case 8: // visit
-                    location.CustomEvent();
-
                     location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
                     break;
 

@@ -20,8 +20,7 @@ using RPG.StartOfGame;
 using RPG.TestFunctions;
 using RPG.UserInput;
 
-/* final boss
- */
+
 
 SystemCreator systemCreator = new SystemCreator();
 TestFunctions testFunctions = new TestFunctions();

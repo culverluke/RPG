@@ -26,7 +26,7 @@ namespace RPG.Items.Weapons
             Name = "Steel Sword";
             Weight = 4.5f;
             Value = 12;
-            Power = 15;
+            Power = 25;
             WeaponSpeed = 0.8f;
         }
 
