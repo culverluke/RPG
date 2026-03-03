@@ -25,7 +25,6 @@ namespace RPG.SaveAndLoad
                 streamWriter.WriteLine(item.ToString());
             }
             streamWriter.Close();
-            //Console.WriteLine("SAVED");
         }
 
 
@@ -55,7 +54,9 @@ namespace RPG.SaveAndLoad
 
             streamWriter.Close();
 
-            Console.WriteLine("SAVED");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\nSAVED");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.ReadKey();
         }
 
@@ -76,6 +77,7 @@ namespace RPG.SaveAndLoad
                 locationHandler.FirstTimeInDock.ToString(),
                 locationHandler.FirstTimeInEnd.ToString(),
                 locationHandler.WoodsCleared.ToString(),
+                locationHandler.BanditsCleared.ToString(),
                 locationHandler.DungeonCleared.ToString()
             };
 

@@ -27,6 +27,7 @@ namespace RPG.LocationSystem.LocationHandler
             FirstTimeInDock = true;
             FirstTimeInEnd = true;
             WoodsCleared = false;
+            BanditsCleared = false;
             DungeonCleared = false;
         }
 
@@ -46,6 +47,7 @@ namespace RPG.LocationSystem.LocationHandler
         public bool FirstTimeInDock { get; set; }
         public bool FirstTimeInEnd { get; set; }
         public bool WoodsCleared { get; set; }
+        public bool BanditsCleared { get; set; }
         public bool DungeonCleared { get; set; }
 
 
@@ -130,7 +132,7 @@ namespace RPG.LocationSystem.LocationHandler
 
             switch (location.LocationKey)
             {
-                case 1:
+                case 0:
 
                     if (FirstTimeInPallet)
                     {
@@ -140,7 +142,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 2:
+                case 1:
 
                     if (FirstTimeInFaire)
                     {
@@ -150,7 +152,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 3:
+                case 2:
 
                     if (FirstTimeInKanto)
                     {
@@ -160,7 +162,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 4:
+                case 3:
 
                     if (FirstTimeInWoods)
                     {
@@ -170,7 +172,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 5:
+                case 4:
 
                     if (FirstTimeInIron)
                     {
@@ -180,7 +182,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 6:
+                case 5:
 
                     if (FirstTimeInNorth)
                     {
@@ -190,7 +192,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 7:
+                case 6:
 
                     if (FirstTimeInSome)
                     {
@@ -200,7 +202,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 8:
+                case 7:
 
                     if (FirstTimeInPlains)
                     {
@@ -210,7 +212,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 9:
+                case 8:
 
                     if (FirstTimeInDungeon)
                     {
@@ -220,7 +222,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 10:
+                case 9:
 
                     if (FirstTimeInDock)
                     {
@@ -230,7 +232,7 @@ namespace RPG.LocationSystem.LocationHandler
 
                     break;
 
-                case 11:
+                case 10:
 
                     if (FirstTimeInEnd)
                     {

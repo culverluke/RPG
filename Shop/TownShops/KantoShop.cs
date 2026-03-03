@@ -14,6 +14,7 @@ namespace RPG.Shop.TownShops
             ShopKey = 2;
 
             ShopInventory.AddToInventory(itemCreator.CreateIronAxe());
+            ShopInventory.AddToInventory(itemCreator.CreateSteelAxe());
             ShopInventory.AddToInventory(itemCreator.CreatePotion());
         }
 

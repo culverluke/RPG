@@ -23,7 +23,7 @@ namespace RPG.BattleHandler
             player.PrintHealth();
             Console.Write("\t\t\t\t");
             monster.PrintHealth();
-            Console.WriteLine();
+            Console.WriteLine("\n");
         }
 
         public void PrintYouAreAttackedBy(Monster monster)

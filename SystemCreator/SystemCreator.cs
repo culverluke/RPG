@@ -60,9 +60,9 @@ namespace RPG.CreateSystems
         public Player.Player CreatePlayerWithStats()
         {
             Random dice = new Random();
-            int attack = dice.Next(10, 21);
-            int defence = dice.Next(10, 21);
-            int speed = dice.Next(10, 21);
+            int attack = dice.Next(15, 26);
+            int defence = dice.Next(15, 26);
+            int speed = dice.Next(15, 26);
 
             Player.Player player = new Player.Player("Player", attack, defence, speed);
             return player;

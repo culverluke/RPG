@@ -12,7 +12,7 @@ namespace RPG.StartOfGame
 
         public void StartGameText()
         {
-            Console.WriteLine("You wake up in your home town of Pallet.");
+            Console.WriteLine("\nYou wake up in your home town of Pallet.");
             Console.ReadKey();
             Console.WriteLine("Today you set off on an adventure.");
             Console.ReadKey();

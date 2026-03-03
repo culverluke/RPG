@@ -41,11 +41,18 @@ namespace RPG.LocationSystem.LocationClasses
 
         }
 
-
+        public void VisitHome()
+        {
+            Console.Clear();
+            Console.WriteLine("You visit home and rest.");
+            Console.ReadKey();
+            Console.WriteLine("Eventually your parents get tired of your shit and kick you out.");
+            Console.ReadKey();
+        }
 
         public void DadBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
         {
-            Monster dad = new Monster("Dad", 20, 50, 12, 20, 0, MonsterSprites.Dad, itemCreator.CreateIronSword());
+            Monster dad = new Monster("Dad", 20, 50, 12, 20, 5, MonsterSprites.Dad, itemCreator.CreateIronSword());
 
             battleParams.BattleHandler.Battle(playerParams, dad, battleParams.BattleText, userInput, locationHandler);
         }
@@ -61,7 +68,7 @@ namespace RPG.LocationSystem.LocationClasses
             int choice = 99;
 
             Console.WriteLine("[1] - Rest");
-            Console.WriteLine("[2] - Shop");
+            Console.WriteLine("[2] - Visit home");
             DisplayLatterMenu();
 
             Int32.TryParse(Console.ReadLine(), out choice);
@@ -73,10 +80,7 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 case 2: // shop 
-                    Console.Clear();
-                    shopParams.Shop = shopParams.ShopCreator.CreateShopWithKey(location.LocationKey, shopParams.ItemCreator);
-                    shopParams.Shop.BuyOrSell(playerParams, userInput);
-                    Console.ReadKey();
+                    VisitHome();
                     break;
 
                 case 3: // leave

@@ -53,6 +53,7 @@ else
 {
     string playerName = userInput.PickAName();
     playerParams.Player.SetPlayerName(playerName);
+    Console.Clear();
 }
 
 if (locationParams.LocationHandler.FirstTimeInPallet)

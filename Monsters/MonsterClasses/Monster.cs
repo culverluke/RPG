@@ -38,7 +38,11 @@ namespace RPG.Monsters.MonsterClasses
 
         public void PrintHealth()
         {
-            Console.Write($"HP   {Health} / {MaxHealth}");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("HP : ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{Health} / {MaxHealth}");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void PrintSprite()
@@ -52,6 +56,7 @@ namespace RPG.Monsters.MonsterClasses
             int lvl = 20;
             int damage = ((2 * lvl + 2) / 5) * player.CurrentWeapon.Power * player.Attack / Defence / 50 + 2;
             Health -= damage;
+            Health = Math.Clamp(Health, 0, MaxHealth);
         }
 
         public void PrintName()

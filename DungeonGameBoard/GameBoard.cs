@@ -61,7 +61,17 @@ namespace RPG.DungeonGameBoard
 
             foreach (var tile in TileList)
             {
+                if(tile.Contents == "X")
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                else if(tile.Contents == "E")
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+
                 Console.Write($"[{tile.Contents}]");
+                Console.ForegroundColor = ConsoleColor.White;
 
                 if (count >= Dimentions)
                 {

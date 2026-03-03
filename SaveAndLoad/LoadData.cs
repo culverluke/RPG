@@ -54,7 +54,9 @@ namespace RPG.SaveAndLoad
                 player.CurrentWeapon = playerWeapon;
 
                 player.PrintStats();
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"\nPlayer {player.Name} Loaded");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.ReadKey();
                 
             }
@@ -90,9 +92,8 @@ namespace RPG.SaveAndLoad
                         playerInventory.InventoryList.Add(itemHolder);
                     }
 
-                    //Console.WriteLine(item.ToString());
                 }                
-                Console.ReadKey();
+
             }
 
         }
@@ -138,7 +139,8 @@ namespace RPG.SaveAndLoad
                 locationHandler.FirstTimeInDock = boolList[9];
                 locationHandler.FirstTimeInEnd = boolList[10];
                 locationHandler.WoodsCleared = boolList[11];
-                locationHandler.DungeonCleared = boolList[12];
+                locationHandler.BanditsCleared = boolList[12];
+                locationHandler.DungeonCleared = boolList[13];
 
             }
 

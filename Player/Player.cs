@@ -52,7 +52,11 @@ namespace RPG.Player
 
         public void PrintHealth()
         {
-            Console.Write($"HP   {Health} / {MaxHealth}");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("HP : ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{Health} / {MaxHealth}");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void PrintStats()

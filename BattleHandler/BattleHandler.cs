@@ -29,6 +29,8 @@ namespace RPG.BattleHandler
             bool playerDead = false;
             bool monsterDead = false;
 
+            monster.Health = monster.MaxHealth;
+
             do
             {
                 Console.Clear();
@@ -38,8 +40,6 @@ namespace RPG.BattleHandler
                     monster.PrintSprite();
 
                     BattleMenu(playerParams, monster, battleText, userInput, locationHandler);
-                    //monster.TakeDamage(player);
-                    //Console.ReadKey();
 
                     if (monster.Health >= 1)
                     {
@@ -77,8 +77,6 @@ namespace RPG.BattleHandler
                         monster.PrintSprite();
 
                         BattleMenu(playerParams, monster, battleText, userInput, locationHandler);
-                        //monster.TakeDamage(player);
-                        //Console.ReadKey();
 
                         if (monster.Health <= 0)
                         {
@@ -94,20 +92,26 @@ namespace RPG.BattleHandler
                 }
 
             } while ((!playerDead) && (!monsterDead));
-            Console.WriteLine("BattleOver");
-            battleText.PrintHealthValues(playerParams.Player, monster);
 
-            Console.WriteLine($"{monster.Name} dropped {monster.GoldDrop} gold");
+            Console.Clear();
+            battleText.PrintHealthValues(playerParams.Player, monster);
+            monster.PrintSprite();
+            
+            Console.WriteLine("\nBattle Over\n");
+            Console.Write($"{monster.Name} dropped ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{monster.GoldDrop} gold");
+            Console.ForegroundColor = ConsoleColor.White;
+            
+
             playerParams.Player.AddGold(monster.GoldDrop);
             Console.ReadKey();
         }
 
 
-
         public void BattleMenu(PlayerParams playerParams, Monster monster, BattleText battleText, UserInput.UserInput userInput, LocationHandler locationHandler)
         {
             int choice = 99;
-
 
             do
             {
@@ -119,7 +123,6 @@ namespace RPG.BattleHandler
 
                 choice = userInput.GetValidInt();
 
-
                 switch (choice)
                 {
                     case 1: // attack
@@ -129,6 +132,8 @@ namespace RPG.BattleHandler
                         break;
 
                     case 2: // use item
+                        Console.Clear();
+                        Console.WriteLine();
                         playerParams.PlayerInventory.PickItemToUse(playerParams.Player, userInput);
                         Console.ReadKey();
                         break;

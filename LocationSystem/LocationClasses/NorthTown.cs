@@ -53,35 +53,42 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
             Console.WriteLine("A large proud man steps up and draws his sword.");
             Console.ReadKey();
+
         }
 
         public void BanditBattle(BattleParams battleParams, PlayerParams playerParams, ItemCreator itemCreator, UserInput.UserInput userInput, LocationHandler.LocationHandler locationHandler)
         {
-            Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, 5, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
-
-            battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText, userInput, locationHandler);
-
-            if (playerParams.Player.Health > 0)
+            if(!locationHandler.BanditsCleared)
             {
-                Console.Clear();
-                Console.WriteLine("Your fight drew the attention of the bandit leader.");
-                Console.ReadKey();
-                Console.WriteLine("Without giving you time to breathe he strikes!");
-                Console.ReadKey();
-                Console.Clear();
+                Monster banditSecond = new Monster("Second in Command", 30, 18, 18, 15, 8, MonsterSprites.BanditSecond, itemCreator.CreateIronSword());
 
-                Monster banditLeader = new Monster("Bandit Leader", 35, 22, 12, 25, 7, MonsterSprites.BanditLeader, itemCreator.CreateSteelSword());
+                battleParams.BattleHandler.Battle(playerParams, banditSecond, battleParams.BattleText, userInput, locationHandler);
 
-                battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText, userInput, locationHandler);
+                if (playerParams.Player.Health > 0)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Your fight drew the attention of the bandit leader.");
+                    Console.ReadKey();
+                    Console.WriteLine("Without giving you time to breathe he strikes!");
+                    Console.ReadKey();
+                    Console.Clear();
 
-                Console.Clear();
-                Console.WriteLine("You cut down the bandit leader and the rest scattered.");
-                Console.ReadKey();
-                Console.WriteLine("When you return the townsfolk are delighted.");
-                Console.ReadKey();
-                Console.WriteLine("They say life should be a little bit easier from now on.");
-                Console.ReadKey();
+                    Monster banditLeader = new Monster("Bandit Leader", 35, 22, 12, 25, 12, MonsterSprites.BanditLeader, itemCreator.CreateSteelSword());
+
+                    battleParams.BattleHandler.Battle(playerParams, banditLeader, battleParams.BattleText, userInput, locationHandler);
+
+                    Console.Clear();
+                    Console.WriteLine("You cut down the bandit leader and the rest scattered.");
+                    Console.ReadKey();
+                    Console.WriteLine("When you return the townsfolk are delighted.");
+                    Console.ReadKey();
+                    Console.WriteLine("They say life should be a little bit easier from now on.");
+                    Console.ReadKey();
+
+                    locationHandler.BanditsCleared = true;
+                }
             }
+            
         }
 
 
@@ -149,13 +156,19 @@ namespace RPG.LocationSystem.LocationClasses
                     break;
 
                 case 8: // visit
-                    location.CustomEvent();
-
-                    if (LocationBattle != null)
+                    if(!locationParams.LocationHandler.BanditsCleared)
                     {
-                        location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
+                        if (LocationBattle != null)
+                        {
+                            location.LocationBattle(battleParams, playerParams, shopParams.ItemCreator, userInput, locationParams.LocationHandler);
+                        }
                     }
-                    break;
+                    else
+                    {
+                        Console.WriteLine("You have already delt with the bandits.");
+                        Console.ReadKey();
+                    }
+                        break;
 
                 default:
                     

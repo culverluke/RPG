@@ -29,9 +29,11 @@ namespace RPG.LocationSystem.LocationClasses
             Console.ReadKey();
             Console.WriteLine("Not much happens here and people enjoy a quiet life.");
             Console.ReadKey();
-            Console.WriteLine("They dont particularly like outsider as they bring trouble.");
+            Console.WriteLine("They dont particularly like outsiders as they bring trouble.");
             Console.ReadKey();
         }
+
+        
 
         public override BaseLocation LocationMenu(BaseLocation location, PlayerParams playerParams, ShopParams shopParams, LocationParams locationParams,
                         BattleParams battleParams, UserInput.UserInput userInput, SaveData saveData)

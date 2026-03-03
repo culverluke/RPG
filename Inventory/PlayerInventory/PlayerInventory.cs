@@ -14,7 +14,7 @@ namespace RPG.Inventory.PlayerInventory
         public void PickItemToUse(Player.Player player, UserInput.UserInput userInput)
         {
             Display();
-            Console.WriteLine("\n0 - EXIT");
+            Console.WriteLine("\n0 - EXIT\n");
 
             Console.WriteLine("Pick an item to use");
 
