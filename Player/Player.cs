@@ -44,10 +44,14 @@ namespace RPG.Player
         public Weapon CurrentWeapon { get; set; }
         public bool WoodsKey { get; set; }
 
+        public bool quitGame = false;
+
 
         public void PrintName()
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(Name);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void PrintHealth()
@@ -120,6 +124,13 @@ namespace RPG.Player
         public void SetPlayerName(string name)
         {
             Name = name;
+        }
+
+        public void QuitGame()
+        {
+            Console.Clear();
+            quitGame = true;
+            Health = 0;
         }
 
         //--------

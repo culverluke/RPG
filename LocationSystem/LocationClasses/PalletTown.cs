@@ -38,7 +38,6 @@ namespace RPG.LocationSystem.LocationClasses
             Console.WriteLine("DEFEND YOURSELF!");
             Console.ReadKey();
             Console.Clear();
-
         }
 
         public void VisitHome()
@@ -81,6 +80,7 @@ namespace RPG.LocationSystem.LocationClasses
 
                 case 2: // shop 
                     VisitHome();
+                    playerParams.Player.Rest();
                     break;
 
                 case 3: // leave
@@ -126,7 +126,6 @@ namespace RPG.LocationSystem.LocationClasses
             }
 
             return location;
-
         }
 
 

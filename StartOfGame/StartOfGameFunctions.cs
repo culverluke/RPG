@@ -24,10 +24,9 @@ namespace RPG.StartOfGame
         public bool NewOrLoad(UserInput.UserInput userInput)
         {
             Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine("[1] - New Game\t\t[2] - Load Game");
+            Console.WriteLine("\n\n");
+            Console.WriteLine("\t\t[1] - New Game\t\t[2] - Load Game");
             int awnser = 99;
-            
 
             do
             {

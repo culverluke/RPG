@@ -45,7 +45,7 @@ namespace RPG.LocationSystem.LocationClasses
             int choice = 99;
 
             Console.WriteLine("[1] - Rest");
-            Console.WriteLine("[2] - Shop");
+            Console.WriteLine("[2] - Shop");  // No shop in this town?
             DisplayLatterMenu();
 
             Int32.TryParse(Console.ReadLine(), out choice);

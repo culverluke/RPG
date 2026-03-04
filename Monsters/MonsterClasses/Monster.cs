@@ -61,7 +61,9 @@ namespace RPG.Monsters.MonsterClasses
 
         public void PrintName()
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(Name);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void PrintStats()

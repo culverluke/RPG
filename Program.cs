@@ -84,7 +84,7 @@ do
 
     currentLocation = currentLocation.LocationMenu(currentLocation, playerParams, shopParams, locationParams, battleParams, userInput, saveData);
 
-} while (playerParams.Player.Health > 0);
+} while (playerParams.Player.Health > 0 || !playerParams.Player.quitGame);
 
 Console.Clear();
 Console.WriteLine("\n\n\t\t\tGAME OVER!");

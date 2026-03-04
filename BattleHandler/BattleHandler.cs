@@ -41,7 +41,7 @@ namespace RPG.BattleHandler
 
                     BattleMenu(playerParams, monster, battleText, userInput, locationHandler);
 
-                    if (monster.Health >= 1)
+                    if (monster.Health >= 1 && !playerParams.Player.quitGame)
                     {
                         Console.Clear();
                         battleText.PrintHealthValues(playerParams.Player, monster);
@@ -70,7 +70,7 @@ namespace RPG.BattleHandler
                     playerParams.Player.TakeDamage(monster);
                     Console.ReadKey();
 
-                    if (playerParams.Player.Health >= 1)
+                    if (playerParams.Player.Health >= 1 && !playerParams.Player.quitGame)
                     {
                         Console.Clear();
                         battleText.PrintHealthValues(playerParams.Player, monster);
@@ -91,21 +91,29 @@ namespace RPG.BattleHandler
 
                 }
 
-            } while ((!playerDead) && (!monsterDead));
+            } while ((!playerDead) && (!monsterDead) && !playerParams.Player.quitGame);
 
-            Console.Clear();
-            battleText.PrintHealthValues(playerParams.Player, monster);
-            monster.PrintSprite();
-            
-            Console.WriteLine("\nBattle Over\n");
-            Console.Write($"{monster.Name} dropped ");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{monster.GoldDrop} gold");
-            Console.ForegroundColor = ConsoleColor.White;
-            
+            if(playerParams.Player.quitGame)
+            {
+                Console.Clear();
+                Console.WriteLine("You quit the game");
+            }
+            else
+            {
+                Console.Clear();
+                battleText.PrintHealthValues(playerParams.Player, monster);
+                monster.PrintSprite();
 
-            playerParams.Player.AddGold(monster.GoldDrop);
-            Console.ReadKey();
+                Console.WriteLine("\nBattle Over\n");
+                Console.Write($"{monster.Name} dropped ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{monster.GoldDrop} gold");
+                Console.ForegroundColor = ConsoleColor.White;
+
+
+                playerParams.Player.AddGold(monster.GoldDrop);
+            }
+                Console.ReadKey();
         }
 
 
@@ -152,8 +160,7 @@ namespace RPG.BattleHandler
                         break;
 
                     case 4: // QUIT
-                        Console.WriteLine("Not Implemented");
-                        Console.ReadKey();
+                        playerParams.Player.QuitGame();
                         Console.Clear();
                         break;
 
@@ -163,7 +170,7 @@ namespace RPG.BattleHandler
                         break;
                 }
 
-            } while (choice != 1); // maybe add  != 2  so using an item costs a turn
+            } while (choice != 1 && !playerParams.Player.quitGame); // maybe add  != 2  so using an item costs a turn
 
         }
 

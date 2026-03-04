@@ -138,6 +138,10 @@ namespace RPG.DungeonGameBoard
                 GameOver = true;
             }
 
+            if(player.quitGame)
+            {
+                GameOver = true;
+            }
 
             return GameOver;
         }
